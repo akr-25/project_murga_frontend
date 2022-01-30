@@ -9,11 +9,7 @@ export const Login = (props) => {
     const {auth, setAuth}  = react.useContext(AuthApi);
   // const kk = Auth.auth;
    const handleOnClick = () => {
-   axios.get("/auth/google")
-          .then((res) => {
-              console.log(res);
-          }) 
-          .catch((e) => console.log(e));
+    window.open("http://localhost:3001/auth/google", "_self")
    }
    return(
 <div>

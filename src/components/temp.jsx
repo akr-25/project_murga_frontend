@@ -16,7 +16,7 @@ export const LoadingPage = () => {
     const [post, setPost] = react.useState(null);
 
     react.useEffect(() => {
-      axios.get("/auth/status").then((response) => {
+      axios.get("http://localhost:3001/auth/status").then((response) => {
         setPost(response.data);
       });
     }, []);

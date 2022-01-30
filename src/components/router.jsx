@@ -11,7 +11,7 @@ import {
 import { Login } from "./login";
 import { Dashboard } from "./Dashboard";
 import { LoadingPage } from "./temp";
-
+import { PrivateLoading,PrivateRoute,PrivateLogin} from "../utils/route";
 
 export const KK = () =>{
     const Auth = react.useContext(AuthApi);
@@ -28,19 +28,4 @@ export const KK = () =>{
 
       </Routes>
     )
-  }
- export const PrivateRoute = (props) => {
-    const {auth, setAuth} = react.useContext(AuthApi);
-      return auth ? <Outlet /> : <Navigate to="/login" />;
-     
-  }
-  
-  export const PrivateLogin = (props) => {
-    const {auth, setAuth} = react.useContext(AuthApi);
-     return !auth ?  <Outlet /> : <Navigate to="/Dashboard" />;
-  }
-
-  export const PrivateLoading = (props) => {
-    const {auth, setAuth} = react.useContext(AuthApi);
-     return !auth ?  <Navigate to="/login" />: <Navigate to="/Dashboard" />;
   }
