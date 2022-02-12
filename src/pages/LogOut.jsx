@@ -8,6 +8,7 @@ export default function LogOut() {
         event.preventDefault();
         window.open("http://localhost:3001/auth/logout", "_self")
     }
+    
     return <div>
         {
             auth ?
