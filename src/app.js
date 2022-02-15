@@ -17,7 +17,7 @@ export default function App() {
           <Route path='/login' element={<LogIn/>}/>
           <Route path='/logout' element={<LogOut/>}/>
           <Route path='/restricted' element={<RequireAuth><Restricted/></RequireAuth>}/>
-          <Route path='/home' element={<RequireAuth><Home/></RequireAuth>}/>
+          <Route path='/home' element={<Home/>} />
         </Routes>    
     </AuthProvider>
   </>);

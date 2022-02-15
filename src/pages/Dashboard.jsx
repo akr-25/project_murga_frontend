@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import '../App.css'
+// import '../App.css'
 
 export default function Dashboard() {
   const {auth} = useAuth(); 
