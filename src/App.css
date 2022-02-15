@@ -26,6 +26,7 @@ body{
 
 .side-menu.inactive{
   width: 80px;
+  /* transition: width .2s ease-in; */
 }
 
 /* TopSection */
@@ -56,6 +57,7 @@ body{
   vertical-align: middle;
   color: #eee;
   cursor: pointer;
+  margin-bottom: 4px;
 }
 
 /* Main Menu */
@@ -63,6 +65,7 @@ body{
   margin: 5px 0;
   position: relative;
   max-height: 250px;
+  /* transition: background-color .2s ease-in; */
 }
 
 .side-menu .main-menu .menu-item{
@@ -72,6 +75,11 @@ body{
   display: block;
   font-weight: 600;
   cursor: pointer;
+}
+
+.side-menu .main-menu .menu-item :hover{
+  border-radius: 10px;
+  background-color: #8ea5e9;
 }
 
 .side-menu .main-menu .menu-item .menu-icon{
@@ -107,12 +115,12 @@ body{
   display: block;
   font-weight: 600;
   cursor: pointer;
+  border-radius: 10px;
+  transition: background-color .2s ease-in;
 }
 
-.side-menu .request-history.active{
-  background: #4E73DF;
-  border-radius: 5px;
-  color: #eee;
+.side-menu .request-history:hover{
+  background-color: #8ea5e9;
 }
 
 .side-menu .request-history .calendar-icon{
@@ -189,4 +197,16 @@ body{
   border-radius: 1px;
   background: #eee;
   margin: 10px 0;
+}
+
+/* page_container */
+
+.page_container{
+  margin-left: 310px;
+  transition: margin-left .2s ease-in-out;
+}
+
+.page_container.inactive{
+  margin-left:90px;
+  transition: margin-left .2s ease-in-out; 
 }

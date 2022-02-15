@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo/admin-img.png";
 import MenuItem from "./MenuItem";
 
-function Sidebar() {
+export const menuItems = [
+  {
+    name: "Entry/Update",
+    to: "/home/entry_update",
+    iconClassName: "fa-solid fa-pen-to-square",
+  },
+  {
+    name: "Feed Log",
+    to: "/home/feed_log",
+    iconClassName: "fa-solid fa-utensils",
+  },
+  {
+    name: "Pricing Table",
+    to: "/home/pricing_table",
+    iconClassName: "fa-solid fa-hand-holding-dollar",
+  },
+];
+
+function Sidebar(props) {
   const [inactive, setInactive] = useState(true);
-  const menuItems = [
-    {
-      name: "Entry/Update",
-      to: "/home",
-      iconClassName: "fa-solid fa-pen-to-square",
-      inactive: { inactive },
-    },
-    {
-      name: "FeedLog",
-      to: "/home",
-      iconClassName: "fa-solid fa-utensils",
-      inactive: { inactive },
-    },
-    {
-      name: "Pricing Table",
-      to: "/home",
-      iconClassName: "fa-solid fa-hand-holding-dollar",
-      inactive: { inactive },
-    },
-  ];
+
+  useEffect((props2) => {
+
+    props.onCollapse(inactive);
+  }, [inactive]);
 
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
@@ -43,41 +47,41 @@ function Sidebar() {
 
       <div className="main-menu">
         <ul>
-          {menuItems.map((menuItem, index) => (
+          {/* {menuItems.map((menuItem, index) => (
             <MenuItem
               key={index}
               name={menuItem.name}
               to={menuItem.to}
               iconClassName={menuItem.iconClassName}
-
+              inactive= { inactive }
             />
-          ))}
-          {/* <li>
-            <a className="menu-item" href="/home">
+          ))} */}
+          <li>
+            <Link className="menu-item" to="/home/entry_update">
               <div className="menu-icon">
                 <i class="fa-solid fa-pen-to-square" />
               </div>
               {!inactive && <span className="menu-text">Entry/Update</span>}
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a className="menu-item" href="/home">
+            <Link className="menu-item" to="/home/feed_log">
               <div className="menu-icon">
                 <i class="fa-solid fa-utensils" />
               </div>
               {!inactive && <span className="menu-text">FeedLog</span>}
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a className="menu-item" href="/home">
+            <Link className="menu-item" to="/home/pricing_table">
               <div className="menu-icon">
                 <i class="fa-solid fa-hand-holding-dollar" />
               </div>
               {!inactive && <span className="menu-text">Pricing Table</span>}
-            </a>
-          </li> */}
+            </Link>
+          </li>
         </ul>
       </div>
 
@@ -85,12 +89,12 @@ function Sidebar() {
       <div className="temp" />
       <div className="temp" />
 
-      <div className="request-history">
+      <Link className="request-history" to="/home/req_history">
         <div className="calendar-icon">
           <i class="fa-solid fa-calendar-days" />
         </div>
         {!inactive && <span className="menu-text">Request History</span>}
-      </div>
+      </Link>
 
       <div className="temp" />
       <div className="divider" />
