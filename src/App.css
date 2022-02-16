@@ -91,6 +91,11 @@ body{
   text-align: center;
 }
 
+.fa-pen-to-square:before :hover {
+  content: "\f044" !important;
+  background-color: #4E73DF !important;
+}
+
 .side-menu .main-menu .menu-item .menu-text{
   position: absolute;
   display: inline-block;

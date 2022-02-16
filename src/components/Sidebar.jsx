@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo/admin-img.png";
 import MenuItem from "./MenuItem";
@@ -24,10 +24,12 @@ export const menuItems = [
 function Sidebar(props) {
   const [inactive, setInactive] = useState(true);
 
-  useEffect((props2) => {
-
-    props.onCollapse(inactive);
-  }, [inactive]);
+  useEffect(
+    (props2) => {
+      props.onCollapse(inactive);
+    },
+    [inactive]
+  );
 
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
@@ -59,7 +61,7 @@ function Sidebar(props) {
           <li>
             <Link className="menu-item" to="/home/entry_update">
               <div className="menu-icon">
-                <i class="fa-solid fa-pen-to-square" />
+                <i className="fa-solid fa-pen-to-square" />
               </div>
               {!inactive && <span className="menu-text">Entry/Update</span>}
             </Link>
@@ -68,7 +70,7 @@ function Sidebar(props) {
           <li>
             <Link className="menu-item" to="/home/feed_log">
               <div className="menu-icon">
-                <i class="fa-solid fa-utensils" />
+                <i className="fa-solid fa-utensils" />
               </div>
               {!inactive && <span className="menu-text">FeedLog</span>}
             </Link>
@@ -77,7 +79,7 @@ function Sidebar(props) {
           <li>
             <Link className="menu-item" to="/home/pricing_table">
               <div className="menu-icon">
-                <i class="fa-solid fa-hand-holding-dollar" />
+                <i className="fa-solid fa-hand-holding-dollar" />
               </div>
               {!inactive && <span className="menu-text">Pricing Table</span>}
             </Link>
@@ -91,7 +93,7 @@ function Sidebar(props) {
 
       <Link className="request-history" to="/home/req_history">
         <div className="calendar-icon">
-          <i class="fa-solid fa-calendar-days" />
+          <i className="fa-solid fa-calendar-days" />
         </div>
         {!inactive && <span className="menu-text">Request History</span>}
       </Link>
@@ -104,7 +106,9 @@ function Sidebar(props) {
         className="toggle-menu-btn-arrow"
         onClick={() => setInactive(!inactive)}
       >
-        <i class={`fa-solid fa-circle-arrow-${inactive ? "right" : "left"}`} />
+        <i
+          className={`fa-solid fa-circle-arrow-${inactive ? "right" : "left"}`}
+        />
       </div>
 
       <div className="side-menu-footer">

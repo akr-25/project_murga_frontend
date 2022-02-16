@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function MenuItem(props) {
-  const { name, iconClassName, to, inactive} = props;
+  const { name, iconClassName, to, inactive } = props;
   return (
     <li>
       <Link className="menu-item" to={to}>
         <div className="menu-icon">
-          <i class={iconClassName} />
+          <i className={iconClassName} />
         </div>
         {!inactive && <span className="menu-text">{name}</span>}
       </Link>
