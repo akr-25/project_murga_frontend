@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
+import { Sidebar } from "../components";
 import "../App.css";
 
 export default function Home() {
   const [inactive, setInactive] = useState(true);
 
   return (
-    <div className="App">
+    <div className='App'>
       <Sidebar
         onCollapse={(inactive) => {
           setInactive(inactive);
