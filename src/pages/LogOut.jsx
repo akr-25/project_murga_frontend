@@ -11,6 +11,7 @@ export default function LogOut() {
         // await axios.post(BACKEND_URLS.AUTH.LOGOUT, {}); //!FIX THIS
         window.open(BACKEND_URLS.AUTH.LOGOUT, "_self")
     }
+    
     return <div>
         {
             auth ?
