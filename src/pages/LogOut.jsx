@@ -1,12 +1,15 @@
+import axios from 'axios';
 import React from 'react';
+import { BACKEND_URLS } from '../config/urls';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LogOut() {
     const { auth } = useAuth(); 
 
-    function logOut(event){
+    const logOut = async (event) => {
         event.preventDefault();
-        window.open("http://localhost:3001/auth/logout", "_self")
+        // await axios.post(BACKEND_URLS.AUTH.LOGOUT, {}); //!FIX THIS
+        window.open(BACKEND_URLS.AUTH.LOGOUT, "_self")
     }
     
     return <div>
