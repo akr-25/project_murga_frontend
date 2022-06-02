@@ -1,10 +1,7 @@
 import React, {Fragment} from 'react';
-import Dashboard from './components/Dashboard';
-import LogIn from './components/LogIn'
+import { Dashboard, LogIn, LogOut, Restricted } from './components';
 import { Routes, Route } from 'react-router-dom';
 import {AuthProvider, RequireAuth} from './contexts/AuthContext';
-import LogOut from './components/LogOut';
-import Restricted from './components/Restricted';
 
 export default function App() {
   return (

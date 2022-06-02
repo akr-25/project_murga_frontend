@@ -1,4 +1,5 @@
 import React from 'react';
+import { BACKEND_URLS } from '../config/urls';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LogOut() {
@@ -6,7 +7,7 @@ export default function LogOut() {
 
     function logOut(event){
         event.preventDefault();
-        window.open("http://localhost:3001/auth/logout", "_self")
+        window.open(BACKEND_URLS.AUTH.LOGOUT, "_self")
     }
     return <div>
         {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { BACKEND_URLS } from '../config/urls';
 
 const AuthContext = createContext(null);
 
@@ -12,7 +13,7 @@ export function AuthProvider({children}){
     const [user, setUser] = useState({})
 
     useEffect(() => {
-            fetch("http://localhost:3001/auth/status", {
+            fetch(BACKEND_URLS.AUTH.STATUS, {
                 credentials: 'include'
             })
             .then(res => res.json())
