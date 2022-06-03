@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar-off-canvas";
 import "../../App.css";
 
 function ReqHistory() {
@@ -7,15 +7,8 @@ function ReqHistory() {
 
   return (
     <div className="App">
-      <Sidebar
-        onCollapse={(inactive) => {
-          setInactive(inactive);
-        }}
-      />
-
-      <div className={`page_container ${inactive ? "inactive" : ""}`}>
-        <h1>Request req_history</h1>
-      </div>
+      <Sidebar/>
+      <h1>Request req_history</h1>
     </div>
   );
 }
