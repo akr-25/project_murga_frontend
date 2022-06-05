@@ -1,0 +1,42 @@
+#root{
+    background-color: #F8F9FC;
+}
+
+.color-nav{
+    background-color: #fff;
+    color: #000;
+}
+
+.nav-greeting{
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+    font-size: 35px;
+    color: #000;
+}
+
+.nav-items{
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .show>.nav-link{
+    margin-right: 15px;
+    color: rgba(0, 0, 0, 0.61)!important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .show>.nav-link:hover{
+    color: rgba(0, 0, 0, 1)!important;
+}
+
+.dropdownIconImg{
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+}
+
+.cardBox{
+    margin: 30px;
+    padding-bottom: 20px;
+}

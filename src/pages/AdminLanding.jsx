@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar-off-canvas";
 import {NavbarMod as Navbar} from '../components/Navbar';
-// import {TypewriterMod as Typewriter} from '../components/Typewriter';
+import {TypewriterMod as Typewriter} from '../components/Typewriter';
 import {RequestCard} from '../components/RequestCard';
 
 import "../App.css";
@@ -15,24 +14,9 @@ export default function Home() {
 
   return (
     <div className="App">
-      <Sidebar
-        handleClose = {handleClose}
-        handleShow = {handleShow}
-        setShow = {setShow}
-
-        onCollapse={(inactive) => {
-          setInactive(inactive);
-        }}
-      />
-
-        
-      {/* </Sidebar> */}
-
-      <div className={`page_container`}>
-        {/* <Navbar></Navbar> */}
-        <RequestCard />
-      </div>
-      
+        <Navbar></Navbar>
+        <Typewriter msg1="Hola Admin!" msg2="Following requests are pending"></Typewriter>
+        <RequestCard />   
     </div>
   );
 }

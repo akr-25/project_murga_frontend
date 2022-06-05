@@ -26,7 +26,6 @@ export default function App() {
           <Route path='/logout' element={<LogOut/>}/>
           <Route path='/restricted' element={<RequireAuth><Restricted/></RequireAuth>}/>
         </Routes>
-        <Navbar/>
         <Routes>
           {/* <Sidebar> */}
             <Route path='/home' element={<Home/>} />

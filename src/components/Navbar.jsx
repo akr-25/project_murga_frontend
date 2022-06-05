@@ -1,5 +1,6 @@
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import React, {useState} from 'react';
+import Sidebar from "./Sidebar-off-canvas";
 
 function NavbarMod(props){
     
@@ -10,6 +11,7 @@ function NavbarMod(props){
             sticky="top" expand="sm" collapseOnSelect>
             <Navbar.Brand>
             {/* <img src={logo} width="40px" height="40px" />{' '} */}
+            <Sidebar/>
             </Navbar.Brand>
 
             <Navbar.Toggle className="coloring" />
