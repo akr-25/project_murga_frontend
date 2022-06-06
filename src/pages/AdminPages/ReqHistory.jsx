@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "../../App.css";
+import "../../styles/app.css";
 import {NavLink} from 'react-router-dom'
-import {Table} from 'react-bootstrap'
+import {Table, Dropdown} from 'react-bootstrap'
 import {NavbarMod as Navbar} from '../../components/Navbar';
+import Pagination from "react-bootstrap-4-pagination";
+import DateRangeComp from "../../components/DateRangeSelector";
+
 
 function ReqHistory() {
   const [inactive, setInactive] = useState(true);
@@ -10,7 +14,8 @@ function ReqHistory() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <h1>Request req_history</h1>
+      <h1 className="pageTitle">Request req_history</h1>
+      <DateRangeComp></DateRangeComp>
       <div style={{padding: "40px"}}>
         <Table striped bordered hover responsive>
           <thead style={{backgroundColor:"#e4e0fa"}}>
@@ -116,28 +121,20 @@ function ReqHistory() {
               <td></td>
               <td><NavLink to='/orderDetails/102935'>Click Here</NavLink></td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>102935</td>
-              <td>Eeshu</td>
-              <td>Rs. 1432</td>
-              <td>28-05-2022</td>
-              <td>-</td>
-              <td></td>
-              <td><NavLink to='/orderDetails/102935'>Click Here</NavLink></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>102935</td>
-              <td>Eeshu</td>
-              <td>Rs. 1432</td>
-              <td>28-05-2022</td>
-              <td>-</td>
-              <td></td>
-              <td><NavLink to='/orderDetails/102935'>Click Here</NavLink></td>
-            </tr>
           </tbody>
         </Table>
+        <div className="pagination">
+          <Pagination
+            threeDots
+            totalPages={22}
+            currentPage={10}
+            showMax={7}
+            prevNext
+            activeBgColor="#4E73DF"
+            activeBorderColor="#b8b8b8"
+          />
+        </div>
+        
       </div>
       
     </div>
