@@ -40,6 +40,10 @@
     margin: 30px;
     padding-bottom: 20px;
 }
+
+
+
+/* reqHistory page */
 .table-striped > tbody > tr:nth-child(2n + 1) > td, .table-striped > tbody > tr:nth-child(2n + 1) > th {
     background-color: #FFF;
  }
@@ -52,43 +56,47 @@
     text-align: center;
 }
 
+.tableData{
+    font-weight: 400;
+}
+
 .pagination{
     justify-content: right;
 }
 
-.dateSearch{
-    background-color: #e4e0fa;
-    margin-bottom: 4em;
-    margin-left: 40px;
-    margin-right: 40px;
+.tableDiv{
+    padding: 40px;
 }
 
+/* Date Range Selector Component */
 input.inputBox {
     font-size: 18px;
     padding: 5px 8px 4px 8px;
     border-radius: 3px;
     border: 1px solid #666;
     margin-right: 10px;
-  }
+}
   
-  .calendarWrap {
+.calendarWrap {
     background-color: #e4e0fa;
     display: inline-block;
     position: relative;
+    margin-top: 10px;
     margin-left: 40px;
     padding: 10px;
-  }
-  .calendarWrap label{
+    border-radius: 8px;
+}
+.calendarWrap label{
     font-size: 20px;
     margin-right: 20px;
     font-weight: 400;
-  }
+}
   
-  .calendarElement {
+.calendarElement {
     position: absolute;
     left: 30%;
     /* transform: translateX(-50%); */
     /* top: 40px; */
     border: 1px solid #ccc;
     z-index: 999;
-  }
+}
