@@ -57,7 +57,9 @@
 }
 
 .tableData{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 400;
+    font-size: 1.2em;
 }
 
 .pagination{
@@ -99,4 +101,28 @@ input.inputBox {
     /* top: 40px; */
     border: 1px solid #ccc;
     z-index: 999;
+}
+
+.sortWrap{
+    background-color: #e4e0fa;
+    /* display: inline-block; */
+    /* position: relative; */
+    margin-top: 10px;
+    margin-left: 40px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.sortWrap label{
+    font-size: 20px;
+    margin-right: 20px;
+    font-weight: 400;
+}
+
+.sortWrap button{
+    margin-right: 10px;
+}
+
+.containerDateSort{
+    display: flex;
 }

@@ -59,13 +59,15 @@ const DateRangeComp = () => {
         onClick={ () => setOpen(open => !open) }
       />
         <button>
-            <i class="fa-solid fa-circle-arrow-right fa-xl"></i>
+            <i className="fa-solid fa-circle-arrow-right fa-xl"></i>
         </button>
 
       <div ref={refOne}>
         {open && 
           <DateRange
-            onChange={item => setRange([item.selection])}
+            onChange={(item) => {
+              setRange([item.selection]);
+            }}
             editableDateInputs={true}
             moveRangeOnFirstSelection={false}
             ranges={range}

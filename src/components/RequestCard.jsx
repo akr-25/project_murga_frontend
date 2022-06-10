@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 
-function RequestCard(){
+function RequestCard(props){
     {/* <div>
             <Card style={{ width: '18rem' }}>
             <Card.Body>
@@ -37,7 +37,7 @@ function RequestCard(){
                 <Col>
                 <Card>
                     <Card.Body>
-                        <Card.Title>Request #12</Card.Title>
+                        <Card.Title>{props.type} #12</Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">Item - Quantity</Card.Subtitle>
                         <Card.Text>
                             Some quick example text to build on the card title and make up the bulk of
@@ -47,8 +47,8 @@ function RequestCard(){
                             
                         </Card.Text>
                         <div>
-                            <Button variant="success">Approve</Button>{'    '}
-                            <Button variant="danger">Reject</Button>
+                            <Button variant="success">{props.acceptBtnText}</Button>{'    '}
+                            <Button variant="danger">{props.rejectBtnText}</Button>
                         </div>
                         </Card.Body>
                 </Card>
