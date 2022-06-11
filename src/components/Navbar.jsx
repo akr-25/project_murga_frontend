@@ -19,13 +19,7 @@ function NavbarMod(props){
             
             <Nav className="nav-items">
                 <Nav.Link href="#home">Home</Nav.Link>
-                <NavDropdown title="My Account">
-                <NavDropdown.Item href="#account/notifications">
-                <img className="dropdownIconImg" src="https://www.pinclipart.com/picdir/big/189-1895786_big-image-transparent-background-notification-icon-clipart.png"></img>Notifications</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#account/logout">
-                <img className="dropdownIconImg" src="https://cdn-icons-png.flaticon.com/512/17/17367.png"></img>Logout</NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link href="#logout">Logout</Nav.Link>
             </Nav>
             </Navbar.Collapse>
 

@@ -15,11 +15,13 @@ export default function Home() {
   return (
     <div className="App">
         <Navbar></Navbar>
-        <Typewriter msg1="Hola Admin!" msg2="Following requests are pending"></Typewriter>
-        <RequestCard type="Request" acceptBtnText="Approve" rejectBtnText="Reject"/>
+        <h1 className="adminLandingHeader">Pending Requests</h1>
+        {/* <Typewriter msg1="Hola Admin!" msg2="Following requests are pending"></Typewriter> */}
+        <RequestCard type="Request" acceptBtnVariant="primary" acceptBtnText="Approve" rejectBtnText="Reject"/>
         <hr></hr>   
-        <Typewriter msg1="Hola Admin!" msg2="Following Transactions are pending"></Typewriter>
-        <RequestCard type="Transaction" acceptBtnText="Complete" rejectBtnText="Cancel"/>   
+        <h1 className="adminLandingHeader">Pending Transactions</h1>
+        {/* <Typewriter msg1="Hola Admin!" msg2="Following Transactions are pending"></Typewriter> */}
+        <RequestCard type="Transaction"  acceptBtnVariant="success" acceptBtnText="Complete" rejectBtnText="Cancel"/>   
     </div>
   );
 }

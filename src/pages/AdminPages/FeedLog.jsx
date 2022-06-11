@@ -23,8 +23,9 @@ function FeedLog() {
               <Form.Control type="text" placeholder="Enter Batch No" style={{backgroundColor: "#9C9C9C", color:"white", fontWeight:"600", fontSize:"0.8em"}}/>
             </Form.Group>
 
+            {/* change "Food per chick" to "Food per batch" */}
             <Form.Group className="mb-3" controlId="perPerson">
-              <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Food per Chick (in grams)</Form.Label>
+              <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Food per Batch (in grams)</Form.Label>
               <Form.Control type="text" placeholder="0g" style={{backgroundColor: "#9C9C9C", color:"white", fontWeight:"600", fontSize:"0.8em"}}/>
             </Form.Group>
 
