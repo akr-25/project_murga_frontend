@@ -123,7 +123,7 @@ let reqHistoryData = [
 
 function ReqHistory() {
   const [tableData, setTableData] = useState(reqHistoryData);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastRow = currentPage * rowsPerPage;
@@ -141,7 +141,7 @@ function ReqHistory() {
 
   // Function to set/update Value of "tableData" variable as per sort option selected.
   function updateDataOnSort(sortOption){
-    if(sortOption == "All"){
+    if(sortOption === "All"){
       setTableData(reqHistoryData);
     }else{
       const newTableData = reqHistoryData.filter(filterData(sortOption));

@@ -9,7 +9,7 @@ function SortTable(props){
     return (
         <div className="sortWrap">
           <label>
-            Sort by: 
+            Filter by: 
           </label> 
           <Button onClick={(event) => handleClick(props.callback, event)} name="All" variant="secondary">All</Button>
           <Button onClick={(event) => handleClick(props.callback, event)} name="Completed" variant="success">Completed</Button>
