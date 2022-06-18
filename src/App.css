@@ -1,0 +1,92 @@
+#root{
+  background-color: #F8F9FC;
+}
+
+.color-nav{
+  background-color: #fff;
+  color: #000;
+}
+
+.nav-greeting{
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  font-size: 35px;
+  color: #000;
+}
+
+.nav-items{
+  font-size: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .show>.nav-link{
+  margin-right: 15px;
+  color: rgba(0, 0, 0, 0.61)!important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .show>.nav-link:hover{
+  color: rgba(0, 0, 0, 1)!important;
+}
+
+.dropdownIconImg{
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
+
+.cardBox{
+  margin: 30px;
+  padding-bottom: 20px;
+}
+
+.nav-link{
+  color: #000;
+}
+
+/* SIDEBAR */
+
+/* Admin-Pages */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(255, 255, 255) !important;
+  opacity: 1; /* Firefox */
+}
+
+.pg-main{
+  background-color: #4E73DF;
+  height: 100%;
+  padding-bottom: 20%;
+}
+
+/* FORMS */
+
+.pg{
+  background: linear-gradient(to bottom, #4E73DF 50%, #fff 50%);
+  height:100%;
+  padding-bottom: 5%;
+}
+
+.form-heading{
+  margin:0%;
+}
+
+.form-container{
+  border-radius:10px;
+  margin-top:100px;
+  margin-bottom:0px;
+  padding:40px;
+  background-color:#F8F9FC
+}
+
+.form-label{
+  font-weight:600;
+  font-size:1em;
+}
+
+.form-control{
+  background-color: #9C9C9C;
+  color:white;
+  font-weight:600;
+  font-size:0.8em
+}
