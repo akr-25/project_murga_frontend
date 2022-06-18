@@ -3,11 +3,12 @@ import "../../App.css";
 import "../../styles/app.css";
 import {Table} from 'react-bootstrap'
 import {NavbarMod as Navbar} from '../../components/Navbar';
-import Pagination from "react-bootstrap-4-pagination";
 import DateRangeComp from "../../components/table/DateRangeSelector";
 import THead from "../../components/table/THead";
 import TBody from "../../components/table/TBody";
+import TFoot from "../../components/table/TFoot";
 import SortTable from "../../components/table/SortTable";
+import { useEffect } from "react";
 
 let reqHistoryData = [
   {
@@ -80,7 +81,7 @@ let reqHistoryData = [
       amt: "1432",
       orderDate: "28-05-2022",
       statusUpdateDate: "29-05-2022",
-      orderStatus: "Pending"
+      orderStatus: "Pending after approval"
   },
   {
       sNo: "9",
@@ -130,6 +131,17 @@ function ReqHistory() {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = tableData.slice(indexOfFirstRow, indexOfLastRow);
 
+  useEffect(() => {
+    fetch("https://dummyjson.com/products", {
+      method: "GET",
+    })
+    .then(res => res.json())
+    .then((res) => {
+      console.log(res.products);
+      setTableData(res.products);
+    });
+  }, []);
+
   // Function to filter data as per sort option clicked. 
   // It is passed as a callback function in filter of reqHistoryData Array.
 
@@ -172,17 +184,15 @@ function ReqHistory() {
           <THead></THead>
           <TBody tableData={currentRows}></TBody>
         </Table>
-          <Pagination
-            threeDots
-            totalPages={Math.ceil(tableData.length / rowsPerPage)}
-            currentPage={currentPage}
-            showMax={7}
-            prevNext
-            activeBgColor="#4E73DF"
-            activeBorderColor="#b8b8b8"
-            onClick={handlePaginationClick}
-          />
-        
+
+        <TFoot 
+        indexOfFirstRow={indexOfFirstRow} 
+        currentRowsLength={currentRows.length} 
+        currentPage={currentPage}
+        tableDataLength={tableData.length}
+        rowsPerPage={rowsPerPage}
+        handlePaginationClick={handlePaginationClick}></TFoot>
+          
       </div>
       
     </div>

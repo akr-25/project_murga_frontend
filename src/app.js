@@ -11,10 +11,9 @@ import FeedLog from './pages/AdminPages/FeedLog';
 import PricingTable from './pages/AdminPages/PricingTable';
 import ReqHistory from './pages/AdminPages/ReqHistory';
 import OrderDetails from './pages/AdminPages/OrderDetails';
+import CreateOrder from './pages/AdminPages/CreateOrder';
 import Sidebar from './components/Sidebar-off-canvas';
 import { Navbar } from 'react-bootstrap';
-
-
 
 
 export default function App() {
@@ -34,6 +33,7 @@ export default function App() {
             <Route path='/home/feed_log' element={<FeedLog/>} />
             <Route path='/home/pricing_table' element={<PricingTable/>} />
             <Route path='/home/req_history' element={<ReqHistory/>} />
+            <Route path='/home/create_an_order' element={<CreateOrder/>} />
             <Route path='/orderDetails/:id' element={<OrderDetails/>} />
           {/* </Sidebar> */}
         </Routes>

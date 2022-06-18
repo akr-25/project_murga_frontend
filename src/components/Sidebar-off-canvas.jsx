@@ -34,6 +34,7 @@ function Example() {
             <ListGroup.Item><NavLink to='/home/feed_log' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>FeedLog</NavLink></ListGroup.Item>
             <ListGroup.Item><NavLink to='/home/pricing_table' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Pricing_Table</NavLink></ListGroup.Item>
             <ListGroup.Item><NavLink to='/home/req_history' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Request_History</NavLink></ListGroup.Item>
+            <ListGroup.Item><NavLink to='/home/create_an_order' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Create_An_Order</NavLink></ListGroup.Item>
           </ListGroup>
   
         </Offcanvas.Body>

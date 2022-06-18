@@ -11,7 +11,7 @@ function Row(props){
             <td className="tableData">{props.orderDate}</td>
             <td className="tableData">{props.statusUpdateDate}</td>
             <td className="tableData">{props.orderStatus}</td>
-            {props.orderNo != "-" ? <td className="tableData"><NavLink to={'/orderDetails/' + props.orderNo}>Click Here</NavLink></td> : <td></td>}
+            {props.orderStatus != "Rejected" ? <td className="tableData"><NavLink to={'/orderDetails/' + props.orderNo}>Click Here</NavLink></td> : <td></td>}
         </tr>
     );
 }
