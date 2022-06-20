@@ -131,14 +131,29 @@ function ReqHistory() {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = tableData.slice(indexOfFirstRow, indexOfLastRow);
 
+  function MapData(row){
+    return {sNo: "0",
+    orderNo: row.request_id,
+    custName: row.applicant_id,
+    amt: "Rs." + row.price,
+    orderDate: row.createdAt,
+    statusUpdateDate: row.updatedAt,
+    orderStatus: row.order_status};
+  }
+
   useEffect(() => {
-    fetch("https://dummyjson.com/products", {
+    fetch("http://localhost:3001/api/request/fetch", {
       method: "GET",
     })
     .then(res => res.json())
     .then((res) => {
-      console.log(res.products);
-      setTableData(res.products);
+      // console.log(res.data.requests);
+
+      const fetchedData = res.data.requests.map(MapData)
+
+      console.log(fetchedData); 
+
+      setTableData(fetchedData);
     });
   }, []);
 
