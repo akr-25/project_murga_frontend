@@ -8,6 +8,8 @@ function CreateOrder(){
     const [itemType, setItemType] = useState("Chick");
     const [itemSubType, setItemSubType] = useState("Egg");
     const [itemQty, setItemQty] = useState(0);
+    const [itemPrice, setItemPrice] = useState(100);
+
 
     const [type,setType]=useState("chick");
 
@@ -70,21 +72,26 @@ function CreateOrder(){
                                 </Form.Select>
                             </Form.Group>
 
-                            {/* change "Food per chick" to "Food per batch" */}
+                            
                             <Form.Group className="mb-3" controlId="quantity">
                             <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity</Form.Label>
                             <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"0.8em"}} value={itemQty} onChange={handleItemQty}/>
                             </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="quantity">
+                            <Form.Label style={{fontWeight:"600", fontSize:"1.3em"}}>Total Price: Rs. {itemQty * itemPrice} </Form.Label>
+                            </Form.Group>
                             
                             <Button type="button" onClick={addToCart} variant="primary">
-                            Add To Cart
+                            Place Order
                             </Button>
                         </Form>
                     </Container>
-                    <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center form-container" >
+
+                    {/* <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center form-container" >
                     <Container className="flex"><h1>Your Cart</h1></Container>   
                         {cartData.length ? <Cart cartData={cartData} updateCartData={setCartData}></Cart> : <div style={{alignItems: "center"}}><h3 style={{marginTop: "20px", textAlign: "center"}}>{cartDesc}</h3></div>}
-                    </Container>
+                    </Container> */}
                 </div>
                 
                 <div>
