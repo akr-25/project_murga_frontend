@@ -5,7 +5,7 @@ function TFoot(props){
     return (
         <div className="tableFooter">
             <div className="footer-1">
-                <p>Rows: {props.indexOfFirstRow + 1} - {props.indexOfFirstRow + props.currentRowsLength} out of {props.tableDataLength}</p>
+                <p>Rows: {props.indexOfFirstRow + 1} - {props.indexOfFirstRow + props.currentRowsLength} of {props.tableDataLength}</p>
             </div>
             <div className="footer-2">
                 <Pagination

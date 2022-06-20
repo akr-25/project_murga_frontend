@@ -144,3 +144,12 @@ input.inputBox {
     margin-right: 20px;
     margin-top: 5px;
 }
+
+.cart{
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.cart-items{
+    justify-items: center;
+}
