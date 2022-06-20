@@ -142,19 +142,22 @@ function ReqHistory() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/request/fetch", {
-      method: "GET",
-    })
-    .then(res => res.json())
-    .then((res) => {
-      // console.log(res.data.requests);
+    async function fetchData(){
+      let res = await fetch("http://localhost:3001/api/request/fetch", {
+        method: "GET", }); 
 
-      const fetchedData = res.data.requests.map(MapData)
+      res = await res.json();
 
-      console.log(fetchedData); 
-
+      const fetchedData = res.data.requests.map(MapData);
       setTableData(fetchedData);
-    });
+    }
+    
+    try{
+      fetchData();
+    }
+    catch(err){
+      console.log(err); 
+    }
   }, []);
 
   // Function to filter data as per sort option clicked. 
