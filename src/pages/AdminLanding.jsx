@@ -30,13 +30,14 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData(){
-      let res = await fetch("http://localhost:3001/api/request/fetch", {
+      let res = await fetch("http://localhost:3001/api/request/fetch", { 
         method: "GET", }); 
 
       res = await res.json();
+      console.log(res); 
 
       const requestData = res.data.requests.filter(item => item.order_status==="Pending For Approval");
-      const txnData = res.data.requests.filter(item => item.order_status==="Pending For Completed");
+      const txnData = res.data.requests.filter(item => item.order_status==="Pending For Completion");
       //here, PFA: Pending For Approval, PFC: Pending For Completion
 
       setPendingRequests(requestData);

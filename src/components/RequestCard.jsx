@@ -3,20 +3,27 @@ import {Card, Button} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
+import { useEffect } from 'react';
 
 async function handleConfirm(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns){
-    //console.log(item);
-    const newOrderStatus = item.order_status === "Pending For Approval" ? "Approved" : "Completed" ;
+    console.log(item);
+
+    const newOrderStatus = item.order_status === "Pending For Approval" ? "Pending For Completion" : "Completed" ;
+
+    let newData = JSON.stringify({"request_id": item.request_id, "order_status": newOrderStatus});
 
     let res = await fetch("http://localhost:3001/api/request/update", {
         method: "POST", 
-        data: {request_id: item.requestId, order_status: newOrderStatus}
+        headers: { "Content-Type": "application/json" },
+        body: newData
     }); 
 
     res = await res.json();
 
-    if(res.status == 200){
-        if(newOrderStatus === "Approved"){
+    console.log(res); 
+
+    if(res.status === 200){
+        if(newOrderStatus === "Pending For Completion"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingRequests);
             setPendingRequests(updatedPendingRequests);
@@ -30,7 +37,6 @@ async function handleConfirm(item, pendingRequests, pendingTxns, setPendingReque
             //console.log(updatedPendingTxns);
             setPendingTxns(updatedPendingTxns);
         }
-        
     }
 }
 
@@ -40,12 +46,14 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
 
     let res = await fetch("http://localhost:3001/api/request/update", {
         method: "POST", 
-        data: {request_id: item.requestId, order_status: newOrderStatus}
+        data: {request_id: item.request_id, order_status: newOrderStatus}
     }); 
 
     res = await res.json();
 
-    if(res.status == 200){
+    console.log(res); 
+
+    if(res.status === 200){
         if(newOrderStatus === "Rejected"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingRequests);
@@ -57,21 +65,20 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
         }
     }
 }
-    
 
 function aRequest(item, requestType, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns){
     return (
-        <Col key={item.requestId}>
+        <Col key={item.request_id}>
             <Card>
                 <Card.Body>
-                    <Card.Title style={{textAlign: "center"}}><strong>{requestType + "#" +item.requestId}</strong></Card.Title>
+                    <Card.Title style={{textAlign: "center"}}><strong>{"Request #" +item.request_id}</strong></Card.Title>
                     <hr></hr>
                     {/* <Card.Subtitle className="mb-2 text-muted">{item.itemType} - {item.quantity}</Card.Subtitle> */}
                     <Card.Text style={{fontWeight:"400", fontSize:"1.2em"}}>
-                        Item Type: <strong>Chick</strong><br></br>
+                        Item Type: <strong>{item.type_of_unit}</strong><br></br>
                         Item SubType: <strong>Egg</strong><br></br>
-                        Quantity: <strong>10</strong><br></br>
-                        Price: <strong>Rs. 200</strong>
+                        Quantity: <strong>{item.req_no_of_units}</strong><br></br>
+                        Price: <strong>{item.price}</strong>
                     </Card.Text>
                     <div>
                         <Button onClick={() => handleConfirm(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns)} variant={requestType === "Request" ? "primary" : "success"}>{requestType === "Request" ? "Approve" : "Complete"}</Button>{'    '}
@@ -89,10 +96,7 @@ function RequestCard(props){
             <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                 {props.requestType === "Request" ? props.pendingRequests.map((item) => aRequest(item, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns)) : props.pendingTxns.map((item) => aRequest(item, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns))}
             </Row>
-        </div>
-
-        
-        
+        </div>   
     )
     
 }
