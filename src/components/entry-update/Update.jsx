@@ -64,30 +64,31 @@ function Update(props){
         //}
     }
 
-    // useEffect(() => {
-    //     async function fetchActiveBatches(){ 
+    useEffect(() => {
+        async function fetchActiveBatches(){ 
 
-    //         let res = await fetch("http://localhost:3001/api/batch/", {
-    //             method: "GET",
-    //         }); 
+            let res = await fetch("http://localhost:3001/api/batch/", {
+                method: "GET",
+            }); 
     
-    //         res = await res.json();
+            res = await res.json();
     
-    //         console.log(res); 
+            console.log("YES");
+            console.log(res); 
 
-    //         if(res.message === "success"){
-    //             setAllBatches(res);
-    //         }else{
-    //             console.log(res);
-    //         }
-    //     }
-    //     try{
-    //         fetchActiveBatches();
-    //     }
-    //     catch(err){
-    //       console.log(err); 
-    //     }
-    //   }, []);
+            if(res.message === "success"){
+                setAllBatches(res.data.batch);
+            }else{
+                console.log(res);
+            }
+        }
+        try{
+            fetchActiveBatches();
+        }
+        catch(err){
+          console.log(err); 
+        }
+      }, []);
     
 
     async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later

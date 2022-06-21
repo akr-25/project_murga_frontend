@@ -144,8 +144,8 @@ function ReqHistory() {
     
     return {sNo: row.request_id,
     orderNo: row.request_id,
-    custName: row.applicant_id,
-    amt: "Rs." + row.price,
+    custName: row.User.first_name + " " + row.User.last_name,
+    amt: "Rs. " + row.price,
     orderDate: orderDate +"-"+ orderMonth +"-"+ orderYear,
     statusUpdateDate: statusDate +"-"+ statusMonth +"-"+ statusYear,
     orderStatus: row.order_status};
