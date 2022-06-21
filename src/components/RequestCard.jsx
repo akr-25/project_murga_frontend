@@ -22,16 +22,19 @@ async function handleConfirm(item, pendingRequests, pendingTxns, setPendingReque
 
     console.log(res); 
 
-    if(res.status === 200){
+    if(res.message === "success"){
+       console.log("res status 200 recieved");
         if(newOrderStatus === "Pending For Completion"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
-            //console.log(updatedPendingRequests);
+            console.log(updatedPendingRequests);
             setPendingRequests(updatedPendingRequests);
 
             item.order_status = newOrderStatus;
-            let updatedPendingTxns = pendingTxns;
-            updatedPendingTxns.push(item);
-            setPendingTxns(updatedPendingTxns);
+            // let updatedPendingTxns = pendingTxns;
+            // updatedPendingTxns.push(item);
+            // console.log(updatedPendingTxns);
+            // setPendingTxns(updatedPendingTxns);
+            setPendingTxns([...pendingTxns, item]);
         }else{
             let updatedPendingTxns = pendingTxns.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingTxns);
@@ -46,14 +49,15 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
 
     let res = await fetch("http://localhost:3001/api/request/update", {
         method: "POST", 
-        data: {request_id: item.request_id, order_status: newOrderStatus}
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({request_id: item.request_id, order_status: newOrderStatus})
     }); 
 
     res = await res.json();
 
     console.log(res); 
 
-    if(res.status === 200){
+    if(res.message === "success"){
         if(newOrderStatus === "Rejected"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingRequests);

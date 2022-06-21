@@ -13,8 +13,8 @@ function SortTable(props){
           </label> 
           <Button onClick={(event) => handleClick(props.callback, event)} name="All" variant="secondary">All</Button>
           <Button onClick={(event) => handleClick(props.callback, event)} name="Completed" variant="success">Completed</Button>
-          <Button onClick={(event) => handleClick(props.callback, event)} name="Approved" variant="primary">Approved</Button>
-          <Button onClick={(event) => handleClick(props.callback, event)} name="Pending" variant="warning">Pending</Button>
+          <Button onClick={(event) => handleClick(props.callback, event)} name="Pending For Completion" variant="primary">PFC</Button>
+          <Button onClick={(event) => handleClick(props.callback, event)} name="Pending For Approval" variant="warning">PFA</Button>
           <Button onClick={(event) => handleClick(props.callback, event)} name="Rejected" variant="danger">Rejected</Button>
         </div>
     );

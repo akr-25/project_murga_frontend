@@ -121,6 +121,8 @@ let reqHistoryData = [
   }
   ];
 
+let allData;
+
 
 function ReqHistory() {
   const [tableData, setTableData] = useState(reqHistoryData);
@@ -132,12 +134,20 @@ function ReqHistory() {
   const currentRows = tableData.slice(indexOfFirstRow, indexOfLastRow);
 
   function MapData(row){
-    return {sNo: "0",
+    const orderYear = row.createdAt.substring(0, 4);
+    const orderMonth = row.createdAt.substring(5, 7);
+    const orderDate = row.createdAt.substring(8, 10);
+    
+    const statusYear = row.createdAt.substring(0, 4);
+    const statusMonth = row.createdAt.substring(5, 7);
+    const statusDate = row.createdAt.substring(8, 10);
+    
+    return {sNo: row.request_id,
     orderNo: row.request_id,
     custName: row.applicant_id,
     amt: "Rs." + row.price,
-    orderDate: row.createdAt,
-    statusUpdateDate: row.updatedAt,
+    orderDate: orderDate +"-"+ orderMonth +"-"+ orderYear,
+    statusUpdateDate: statusDate +"-"+ statusMonth +"-"+ statusYear,
     orderStatus: row.order_status};
   }
 
@@ -149,6 +159,7 @@ function ReqHistory() {
       res = await res.json();
 
       const fetchedData = res.data.requests.map(MapData);
+      allData = fetchedData;
       setTableData(fetchedData);
     }
     
@@ -172,11 +183,21 @@ function ReqHistory() {
   // Function to set/update Value of "tableData" variable as per sort option selected.
   function updateDataOnSort(sortOption){
     if(sortOption === "All"){
-      setTableData(reqHistoryData);
+      setTableData(allData);
     }else{
-      const newTableData = reqHistoryData.filter(filterData(sortOption));
+      const newTableData = allData.filter(filterData(sortOption));
       setCurrentPage(1);
-      setTableData(newTableData);
+      if(newTableData.length){
+        setTableData(newTableData);
+      }else{
+        setTableData([{sNo: "NO DATA FOUND",
+          orderNo: "",
+          custName: "",
+          amt: "",
+          orderDate: "",
+          statusUpdateDate: "",
+          orderStatus: ""}])
+      }
     }
   }
 

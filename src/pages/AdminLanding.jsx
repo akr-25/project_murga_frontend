@@ -7,25 +7,8 @@ import { useEffect } from "react";
 
 export default function Home() {
 
-  const [pendingRequests, setPendingRequests] = useState([{
-    order_status: "Pending For Approval",
-    requestId: "1932",
-    itemType: "Chick",
-    quantity: "10"
-  },
-  {
-    order_status: "Pending For Approval",
-    requestId: "1933",
-    itemType: "Chick",
-    quantity: "10"
-  },
-]);
-  const [pendingTxns, setPendingTxns] = useState([{
-    order_status: "Pending For Completion",
-    requestId: "1934",
-    itemType: "Chick",
-    quantity: "10"
-  }]);
+  const [pendingRequests, setPendingRequests] = useState([]);
+  const [pendingTxns, setPendingTxns] = useState([]);
   
 
   useEffect(() => {
