@@ -30,12 +30,11 @@ function PlaceOrder(){
         const typeOfUnit = itemType.substring(0,1) + itemSubType.substring(0, 1);
     
         const orderData = {
-            request_id: "12",
-            applicant_id: "6", //Fetch userID after admin enters user details, and put it here
+            applicant_id: "7", //Fetch userID after admin enters user details, and put it here
             order_status: "Pending For Approval",
             type_of_unit: typeOfUnit,
             req_no_of_units: itemQty,
-            price: itemPrice * itemQty, // fetch item price when both item type and item sub type are selected
+            price: itemPrice * itemQty, //! fetch item price when both item type and item sub type are selected
             order_type: orderType
         }
 

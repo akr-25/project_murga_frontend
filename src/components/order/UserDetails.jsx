@@ -20,14 +20,14 @@ function UserDetails(props){
     function handleMobNumber(e){
         setMobNumber(e.target.value);
     }
+
     async function submitDetails(){
         const userData = { 
-            user_id: "6",
             first_name: firstName,
             last_name: lastName,
             contact_no: mobNumber,
             email: email,
-            password: "0021312312" 
+            password: "00000000" 
         }
         
         let res = await fetch("http://localhost:3001/api/user/create", {
@@ -41,7 +41,7 @@ function UserDetails(props){
         console.log(res); 
 
         if(res.message === "success"){
-            props.setUserID(3); // change it to the user ID fetched from response of above request.
+            props.setUserID(res.data.user.user_id); // change it to the user ID fetched from response of above request.
             alert("User Fetched Successfully");
         }else{
             console.log(res);
