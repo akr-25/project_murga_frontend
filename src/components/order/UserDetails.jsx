@@ -3,10 +3,10 @@ import {Form, Container, Button} from "react-bootstrap";
 
 
 function UserDetails(props){
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [mobNumber, setMobNumber] = useState();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [mobNumber, setMobNumber] = useState("");
 
     function handleFirstName(e){
         setFirstName(e.target.value);
@@ -53,8 +53,8 @@ function UserDetails(props){
         <div className="items-div">
             <div className="row">
                 <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                    <Container className="flex" style={{margin: "0%"}}><h1 style={{marginBottom: "15px"}}>User Details</h1></Container>  
-                    <Form>
+                    <Container className="flex form-heading"><h1>Enter User Details</h1><hr></hr></Container>  
+                     <Form>
                         <Form.Group className="mb-3" controlId="pass">
                             <Form.Label className="form-label">First Name</Form.Label>
                             <Form.Control value={firstName} onChange={handleFirstName} type="text" name="userName" placeholder="Enter User Name" className="form-control"/>

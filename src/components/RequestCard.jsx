@@ -45,7 +45,7 @@ async function handleConfirm(item, pendingRequests, pendingTxns, setPendingReque
 
 async function handleReject(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns){
     //console.log(item);
-    const newOrderStatus = item.order_status === "Pending For Approval" ? "Rejected" : "Cancelled" ;
+    const newOrderStatus = "Cancelled";
 
     let res = await fetch("http://localhost:3001/api/request/update", {
         method: "POST", 
@@ -58,15 +58,15 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
     console.log(res); 
 
     if(res.message === "success"){
-        if(newOrderStatus === "Rejected"){
+        //if(newOrderStatus === "Rejected"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingRequests);
             setPendingRequests(updatedPendingRequests);
-        }else{
+        //}else{
             let updatedPendingTxns = pendingTxns.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingTxns);
             setPendingTxns(updatedPendingTxns);
-        }
+        //}
     }
 }
 
@@ -86,7 +86,7 @@ function aRequest(item, requestType, pendingRequests, pendingTxns, setPendingReq
                     </Card.Text>
                     <div>
                         <Button onClick={() => handleConfirm(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns)} variant={requestType === "Request" ? "primary" : "success"}>{requestType === "Request" ? "Approve" : "Complete"}</Button>{'    '}
-                        <Button onClick={() => handleReject(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns)} variant="danger">{requestType === "Request" ? "Reject" : "Cancel"}</Button>
+                        <Button onClick={() => handleReject(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns)} variant="danger">Cancel</Button>
                     </div>
                     </Card.Body>
             </Card>
