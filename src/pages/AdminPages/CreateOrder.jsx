@@ -8,16 +8,11 @@ function CreateOrder(){
 
     const [userID, setUserID] = useState("");
 
-
-
-
     return (
         <div className="pg">
             <Navbar></Navbar>
             {userID == "" ? <UserDetails setUserID={setUserID}></UserDetails> : <PlaceOrder></PlaceOrder>}
-
         </div>
-        
     );
 }
 

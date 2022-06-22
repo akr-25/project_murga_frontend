@@ -12,114 +12,14 @@ import { useEffect } from "react";
 
 let reqHistoryData = [
   {
-      sNo: "1",
-      orderNo: "102934",
-      custName: "Rosy",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Approved"
-  },
-  {
-      sNo: "2",
-      orderNo: "102935",
-      custName: "Eeshu",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Pending"
-  },
-  {
-      sNo: "3",
-      orderNo: "-",
-      custName: "Aman",
-      amt: "-",
-      orderDate: "-",
-      statusUpdateDate: "-",
-      orderStatus: "Rejected"
-  },
-  {
-      sNo: "4",
-      orderNo: "102934",
-      custName: "Rosy",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Approved"
-  },
-  {
-      sNo: "5",
-      orderNo: "102935",
-      custName: "Eeshu",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Pending"
-  },
-  {
-      sNo: "6",
-      orderNo: "-",
-      custName: "Aman",
-      amt: "-",
-      orderDate: "-",
-      statusUpdateDate: "-",
-      orderStatus: "Completed"
-  },
-  {
-      sNo: "7",
-      orderNo: "102934",
-      custName: "Rosy",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Approved"
-  },
-  {
-      sNo: "8",
-      orderNo: "102935",
-      custName: "Eeshu",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Pending after approval"
-  },
-  {
-      sNo: "9",
-      orderNo: "-",
-      custName: "Aman",
-      amt: "-",
-      orderDate: "-",
-      statusUpdateDate: "-",
-      orderStatus: "Rejected"
-  },
-  {
-      sNo: "10",
-      orderNo: "102934",
-      custName: "Rosy",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Approved"
-  },
-  {
-      sNo: "11",
-      orderNo: "102935",
-      custName: "Eeshu",
-      amt: "1432",
-      orderDate: "28-05-2022",
-      statusUpdateDate: "29-05-2022",
-      orderStatus: "Pending"
-  },
-  {
-      sNo: "12",
-      orderNo: "-",
-      custName: "Aman",
-      amt: "-",
-      orderDate: "-",
-      statusUpdateDate: "-",
-      orderStatus: "Rejected"
-  }
-  ];
+      sNo: "",
+      orderNo: "",
+      custName: "",
+      amt: "",
+      orderDate: "",
+      statusUpdateDate: "",
+      orderStatus: ""
+  }];
 
 let allData;
 

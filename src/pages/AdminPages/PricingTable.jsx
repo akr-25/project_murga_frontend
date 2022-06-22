@@ -12,8 +12,8 @@ function FeedLog() {
       <Navbar/>
       
         <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center form-container" >
-          <Container className="flex form-heading"><h1>Pricing Table</h1></Container>  
-          <Form>
+          <Container className="flex form-heading"><h1>Price Log</h1><hr></hr></Container>  
+             <Form>
 
             <Form.Group className="mb-3" controlId="entryDate">
                 <Form.Label className="form-label">Select Date</Form.Label>

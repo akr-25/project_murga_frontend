@@ -68,7 +68,12 @@
 }
 
 .form-heading{
-  margin:0%;
+  text-align: center;
+}
+
+.form-heading hr{
+  height: 3px;
+  margin-bottom: 30px;
 }
 
 .form-container{
@@ -94,3 +99,11 @@
 /* .items-div{
   display: flex;
 } */
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
+}

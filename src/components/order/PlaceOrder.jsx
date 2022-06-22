@@ -12,19 +12,62 @@ function PlaceOrder(){
     const [itemSubType, setItemSubType] = useState("Egg");
     const [itemQty, setItemQty] = useState(0);
     const [itemPrice, setItemPrice] = useState(100);
+    const [itemSellPrice, setItemSellPrice] = useState(100);
+    const [allPrices, setAllPrices] = useState([]);
 
+    useEffect(() => {
+        async function fetchAllPrices(){ 
+
+            let res = await fetch("http://localhost:3001/api/priceLogs/", {
+                method: "GET",
+            }); 
+    
+            res = await res.json();
+    
+            console.log("YES");
+            console.log(res); 
+
+            if(res.message === "success"){
+                setAllPrices(res.data.price);
+            }else{
+                console.log(res);
+            }
+        }
+        try{
+            fetchAllPrices();
+        }
+        catch(err){
+          console.log(err); 
+        }
+      }, []);
 
     function handleOrderType(e){
         setOrderType(e.target.value);
     }
     function handleItemType(e){
         setItemType(e.target.value);
+        handleItemPrice();
     }
     function handleItemSubType(e){
         setItemSubType(e.target.value);
+        handleItemPrice();
     }
     function handleItemQty(e){
         setItemQty(e.target.value);
+    }
+    function handleItemPrice(){
+        const itemTypeCode = itemType.substring(0, 1);
+        const itemSubTypeCode = itemSubType.substring(0, 1);
+
+        const itemCode = itemTypeCode + itemSubTypeCode;
+        //console.log(itemCode);
+
+        const extractedPricesArray = allPrices.filter(item => item.itemCode === itemCode);// this array will contain only 1 element, as we are assuming only one common price for all batches of an itemCode
+        
+        setItemPrice(extractedPricesArray[0]);
+    }
+    function handleItemSellPrice(e){
+        setItemSellPrice(e.target.value);
     }
     async function placeOrder(){
         const typeOfUnit = itemType.substring(0,1) + itemSubType.substring(0, 1);
@@ -65,7 +108,7 @@ function PlaceOrder(){
         <div className="items-div">
             <div className="row">
                 <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                    <Container className="flex" style={{margin: "0%"}}><h1>Add Items to cart</h1></Container>  
+                    <Container className="flex form-heading"><h1>Place a New Order</h1><hr></hr></Container>  
                     <Form>
                         <Form.Group className="mb-3" controlId="itemType">
                             <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Order Type</Form.Label>
@@ -100,7 +143,12 @@ function PlaceOrder(){
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"600", fontSize:"1.3em"}}>Total Price: Rs. {itemQty * itemPrice} </Form.Label>
+                        <Form.Label style={{fontWeight:"600", fontSize:"1.3em"}}>Current Price per Unit: Rs. {itemPrice} </Form.Label>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Selling Price per Unit : Rs.</Form.Label>
+                        <Form.Control type="number" min={0} placeholder="" style={{ fontWeight:"600", fontSize:"0.8em"}} value={itemSellPrice} onChange={(e) => handleItemSellPrice(e)}/>
                         </Form.Group>
                         
                         <Button type="button" onClick={placeOrder} variant="primary">

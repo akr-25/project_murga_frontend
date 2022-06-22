@@ -128,7 +128,7 @@ function Update(props){
             <div className="items-div">
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                        <Container className="flex" style={{margin: "0%"}}><h1 style={{marginBottom: "15px"}}>Create New entry</h1></Container>  
+                        <Container className="flex form-heading"><h1>Update An Entry</h1><hr></hr></Container>  
                         <Form>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
