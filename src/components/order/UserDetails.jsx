@@ -21,8 +21,7 @@ function UserDetails(props){
         setMobNumber(e.target.value);
     }
     async function submitDetails(){
-        const userData = { 
-            user_id: "6",
+        const userData = {
             first_name: firstName,
             last_name: lastName,
             contact_no: mobNumber,

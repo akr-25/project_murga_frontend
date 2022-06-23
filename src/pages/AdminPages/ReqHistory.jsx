@@ -12,13 +12,13 @@ import { useEffect } from "react";
 
 let reqHistoryData = [
   {
-      sNo: "",
-      orderNo: "",
-      custName: "",
-      amt: "",
-      orderDate: "",
-      statusUpdateDate: "",
-      orderStatus: ""
+      sNo: "-",
+      orderNo: "-",
+      custName: "-",
+      amt: "-",
+      orderDate: "-",
+      statusUpdateDate: "-",
+      orderStatus: "-"
   }];
 
 let allData;

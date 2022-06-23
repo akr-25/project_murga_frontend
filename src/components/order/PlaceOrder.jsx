@@ -18,7 +18,7 @@ function PlaceOrder(){
     useEffect(() => {
         async function fetchAllPrices(){ 
 
-            let res = await fetch("http://localhost:3001/api/priceLogs/", {
+            let res = await fetch("http://localhost:3001/api/priceLog/fetch/", {
                 method: "GET",
             }); 
     
@@ -28,7 +28,7 @@ function PlaceOrder(){
             console.log(res); 
 
             if(res.message === "success"){
-                setAllPrices(res.data.price);
+                setAllPrices(res.data.pricelogs);
             }else{
                 console.log(res);
             }
@@ -62,9 +62,10 @@ function PlaceOrder(){
         const itemCode = itemTypeCode + itemSubTypeCode;
         //console.log(itemCode);
 
-        const extractedPricesArray = allPrices.filter(item => item.itemCode === itemCode);// this array will contain only 1 element, as we are assuming only one common price for all batches of an itemCode
+        const extractedPricesArray = allPrices.filter(item => item.batch_id.substring(0, 2) === itemCode);// this array will contain only 1 element, as we are assuming only one common price for all batches of an itemCode
         
-        setItemPrice(extractedPricesArray[0]);
+        console.log(extractedPricesArray.PriceLogs[0]);
+        // setItemPrice(extractedPricesArray[0]);
     }
     function handleItemSellPrice(e){
         setItemSellPrice(e.target.value);
@@ -131,7 +132,7 @@ function PlaceOrder(){
                             <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
                             <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
                                 <option name="E">Egg</option>
-                                <option name="C">Chick</option>
+                                <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
                                 <option name="L">Layer</option>
                                 <option name="G">Grower</option>
                             </Form.Select>

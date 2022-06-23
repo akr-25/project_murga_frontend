@@ -42,7 +42,7 @@ function Entry(props){
 
         if(res.message === "success"){
             //props.setUserID(3); // change it to the user ID fetched from response of above request.
-            //alert("User Fetched Successfully");
+            alert("Batch Added successfully!");
         }else{
             console.log(res);
         }
@@ -69,7 +69,7 @@ function Entry(props){
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
                                 <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
                                     <option name="E">Egg</option>
-                                    <option name="C">Chick</option>
+                                    <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
                                     <option name="L">Layer</option>
                                     <option name="G">Grower</option>
                                 </Form.Select>
