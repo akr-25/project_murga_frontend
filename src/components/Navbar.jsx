@@ -1,6 +1,7 @@
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import React, {useState} from 'react';
 import Sidebar from "./Sidebar-off-canvas";
+import {NavLink} from "react-router-dom";
 
 function NavbarMod(props){
     
@@ -18,8 +19,7 @@ function NavbarMod(props){
             <Navbar.Collapse>
             
             <Nav className="nav-items">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#logout">Logout</Nav.Link>
+                <NavLink className="navbar-item" to="/logout">Logout</NavLink>
             </Nav>
             </Navbar.Collapse>
 

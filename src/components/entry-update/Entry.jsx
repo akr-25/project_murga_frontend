@@ -1,28 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Form, Container, Button} from "react-bootstrap";
 import {NavbarMod as Navbar} from "../../components/Navbar";
 
 function Entry(props){
     const [itemType, setItemType] = useState("Chicken");
     const [itemSubType, setItemSubType] = useState("Egg");
-    const [itemQtyType1, setItemQtyType1] = useState(0);
-    const [itemQtyType2, setItemQtyType2] = useState(0);
-    const [itemPrice, setItemPrice] = useState(100);
 
     function handleItemType(e){
         setItemType(e.target.value);
     }
     function handleItemSubType(e){
         setItemSubType(e.target.value);
-    }
-    function handleItemQtyType1(e){
-        setItemQtyType1(e.target.value);
-    }
-    function handleItemQtyType2(e){
-        setItemQtyType2(e.target.value);
-    }
-    function handleItemPrice(e){
-        setItemPrice(e.target.value);
     }
     async function createNewBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
         let batchData = {
@@ -42,7 +30,7 @@ function Entry(props){
 
         if(res.message === "success"){
             //props.setUserID(3); // change it to the user ID fetched from response of above request.
-            //alert("User Fetched Successfully");
+            alert(`Batch Added successfully! \n\nBatch ID : ${res.data.batch.batch_id}`);
         }else{
             console.log(res);
         }
@@ -55,7 +43,7 @@ function Entry(props){
             <div className="items-div">
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                        <Container className="flex form-heading"><h1>Create a New Entry</h1><hr></hr></Container>  
+                        <Container className="flex form-heading"><h1>Create a New Batch</h1><hr></hr></Container>  
                         <Form>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
@@ -69,7 +57,7 @@ function Entry(props){
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
                                 <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
                                     <option name="E">Egg</option>
-                                    <option name="C">Chick</option>
+                                    <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
                                     <option name="L">Layer</option>
                                     <option name="G">Grower</option>
                                 </Form.Select>
@@ -91,7 +79,7 @@ function Entry(props){
                             </Form.Group> */}
 
                             <Button onClick={createNewBatch} variant="primary">
-                                Submit New Entry
+                                Create New Batch
                             </Button>
                         </Form>
                     </Container>

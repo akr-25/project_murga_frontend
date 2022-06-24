@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {Form, Container, Button} from "react-bootstrap";
-import {NavbarMod as Navbar} from "../../components/Navbar";
 
-function Update(props){
+function FeedForm(props){
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
-    const [itemQtyType1, setItemQtyType1] = useState("");
-    const [itemQtyType2, setItemQtyType2] = useState("");
-    const [typeOfChange, setTypeOfChange] = useState("");
+    const [foodQty, setFoodQty] = useState(0);
+    const [foodPrice, setFoodPrice] = useState(0);
 
     const [allBatches, setAllBatches] = useState([]);
 
@@ -44,14 +42,11 @@ function Update(props){
         setItemSubType(e.target.value);
         handleBatchList(itemType, e.target.value);
     }
-    function handleItemQtyType1(e){
-        setItemQtyType1(e.target.value);
+    function handleFoodQty(e){
+        setFoodQty(e.target.value);
     }
-    function handleItemQtyType2(e){
-        setItemQtyType2(e.target.value);
-    }
-    function handleTypeOfChange(e){
-        setTypeOfChange(e.target.value);
+    function handleFoodPrice(e){
+        setFoodPrice(e.target.value);
     }
     function handleBatchSelected(e){
         console.log(e.target.value);
@@ -69,31 +64,6 @@ function Update(props){
 
         setBatchesToDisplay(extractedBatches);
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
-    }
-
-    async function prevBalanceLog(){ // here, there is a confusion regarding batch table and price table... Update it later
-        let batchData = {
-            unit_id: batchSelected,
-            net_balance_type1: parseInt(itemQtyType1),
-            net_balance_type2: parseInt(itemQtyType2),
-            type_of_change: typeOfChange
-        }
-
-        let res = await fetch("http://localhost:3001/api/balanceLog/create", {
-            method: "POST", 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(batchData)
-        }); 
-
-        res = await res.json();
-
-        console.log(res); 
-
-        if(res.message === "success"){
-            alert("Data updated successfully");
-        }else{
-            console.log(res);
-        }
     }
 
     useEffect(() => {
@@ -122,29 +92,28 @@ function Update(props){
         fetchActiveBatches();
       },[]);
     
-    
 
-    async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
+
+    async function enterFeedLog(){ // update corresonding routes when ready
         try{
-            let batchData = {
+            let feedData = {
                 unit_id: batchSelected,
-                net_balance_type1: parseInt(itemQtyType1),
-                net_balance_type2: parseInt(itemQtyType2),
-                type_of_change: typeOfChange
+                rate: foodQty,
+                cost_per_gram: foodPrice
             }
-
-            let res = await fetch("http://localhost:3001/api/balanceLog/create", {
+            
+            let res = await fetch("http://localhost:3001/api/feedConsumptionLog/create", {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(batchData)
+                body: JSON.stringify(feedData)
             }); 
-
+    
             res = await res.json();
-
+    
             console.log(res); 
-
+    
             if(res.message === "success"){
-                alert("Data updated successfully");
+                alert("Feed data logged successfully");
             }else{
                 console.log(res);
             }
@@ -152,25 +121,22 @@ function Update(props){
         catch(err){
             console.log(err);
         }
-            
     }
 
     function ListABatch(batch){
-        // console.log(batch);
+        //console.log(batch);
         return (
-            <option key={batch} name={batch} value={batch}>{batch}</option>
+            <option key={batch} name={batch}>{batch}</option>
         );
     }
 
     
     return (
-        <div className="pg">
-        <Navbar></Navbar>
-            <div className="items-div">
-                <div className="row">
-                    <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                        <Container className="flex form-heading"><h1>Update An Entry</h1><hr></hr></Container>  
-                        <Form>
+        <div className="items-div">
+            <div className="row">
+                <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
+                    <Container className="flex form-heading"><h1>Feed-Log</h1><hr></hr></Container>  
+                    <Form>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
                                 <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -184,7 +150,6 @@ function Update(props){
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
                                 <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
                                     <option name="-">Select Item SubType</option>
-                                    <option name="E">Egg</option>
                                     <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
                                     <option name="L">Layer</option>
                                     <option name="G">Grower</option>
@@ -198,31 +163,25 @@ function Update(props){
                                 </Form.Select>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="type1_quantity">
-                                <Form.Label className="form-label">Quantity-Type 1</Form.Label>
-                                <Form.Control value={itemQtyType1} onChange={(e) => handleItemQtyType1(e)} type="number" placeholder="0" className="form-control"/>
-                            </Form.Group>
+                        <Form.Group className="mb-3" controlId="food_quantity">
+                            <Form.Label className="form-label">Food per Piece (in grams)</Form.Label>
+                            <Form.Control value={foodQty} onChange={(e) => handleFoodQty(e)} type="number" placeholder="0" className="form-control"/>
+                        </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="type2_quantity">
-                                <Form.Label className="form-label">Quantity-Type 2</Form.Label>
-                                <Form.Control value={itemQtyType2} onChange={(e) => handleItemQtyType2(e)} type="number" placeholder="0" className="form-control"/>
-                            </Form.Group>
+                        <Form.Group className="mb-3" controlId="price">
+                            <Form.Label className="form-label">Price per gram(in Rs.)</Form.Label>
+                            <Form.Control value={foodPrice} onChange={(e) => handleFoodPrice(e)} type="number" placeholder="Rs.0" className="form-control"/>
+                        </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="price">
-                                <Form.Label className="form-label">Type of change / Reason for Update</Form.Label>
-                                <Form.Control value={typeOfChange} onChange={(e) => handleTypeOfChange(e)} type="text" placeholder="e.g Item sold" className="form-control"/>
-                            </Form.Group>
-
-                            <Button onClick={updateBatch} variant="primary">
-                                Update Entry
-                            </Button>
-                        </Form>
-                    </Container>
-                </div>
-                
+                        <Button onClick={enterFeedLog} variant="primary">
+                            Submit FeedLog
+                        </Button>
+                    </Form>
+                </Container>
             </div>
+            
         </div>
     );
 }
 
-export default Update;
+export default FeedForm;
