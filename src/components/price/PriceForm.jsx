@@ -65,6 +65,7 @@ function PriceForm(props){
         const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
         setBatchesToDisplay(extractedBatches);
+        extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
     }
 
     useEffect(() => {

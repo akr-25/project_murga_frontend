@@ -69,6 +69,7 @@ function FeedForm(props){
         const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
         setBatchesToDisplay(extractedBatches);
+        extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
     }
 
     useEffect(() => {
@@ -117,12 +118,11 @@ function FeedForm(props){
 
         console.log(res); 
 
-        // if(res.message === "success"){
-        //     props.setUserID(3); // change it to the user ID fetched from response of above request.
-        //     alert("User Fetched Successfully");
-        // }else{
-        //     console.log(res);
-        // }
+        if(res.message === "success"){
+            alert("Feed data logged successfully");
+        }else{
+            console.log(res);
+        }
     }
 
     function ListABatch(batch){

@@ -12,13 +12,13 @@ import { useEffect } from "react";
 
 let reqHistoryData = [
   {
-      sNo: "-",
-      orderNo: "-",
-      custName: "-",
-      amt: "-",
-      orderDate: "-",
-      statusUpdateDate: "-",
-      orderStatus: "-"
+      sNo: "NO DATA FOUND",
+      orderNo: "",
+      custName: "",
+      amt: "",
+      orderDate: "",
+      statusUpdateDate: "",
+      orderStatus: ""
   }];
 
 let allData;
@@ -60,7 +60,7 @@ function ReqHistory() {
 
       const fetchedData = res.data.requests.map(MapData);
       allData = fetchedData;
-      setTableData(fetchedData);
+      allData.length === 0 ? setTableData(reqHistoryData) : setTableData(fetchedData);
     }
     
     try{
@@ -83,20 +83,14 @@ function ReqHistory() {
   // Function to set/update Value of "tableData" variable as per sort option selected.
   function updateDataOnSort(sortOption){
     if(sortOption === "All"){
-      setTableData(allData);
+      allData.length === 0 ? setTableData(reqHistoryData) : setTableData(allData);
     }else{
       const newTableData = allData.filter(filterData(sortOption));
       setCurrentPage(1);
       if(newTableData.length){
         setTableData(newTableData);
       }else{
-        setTableData([{sNo: "NO DATA FOUND",
-          orderNo: "",
-          custName: "",
-          amt: "",
-          orderDate: "",
-          statusUpdateDate: "",
-          orderStatus: ""}])
+        setTableData(reqHistoryData);
       }
     }
   }

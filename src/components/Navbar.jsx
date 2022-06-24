@@ -19,7 +19,6 @@ function NavbarMod(props){
             <Navbar.Collapse>
             
             <Nav className="nav-items">
-                <NavLink className="navbar-item" to='/home'>Home</NavLink>
                 <NavLink className="navbar-item" to="/logout">Logout</NavLink>
             </Nav>
             </Navbar.Collapse>

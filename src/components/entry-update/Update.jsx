@@ -5,8 +5,8 @@ import {NavbarMod as Navbar} from "../../components/Navbar";
 function Update(props){
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
-    const [itemQtyType1, setItemQtyType1] = useState(0);
-    const [itemQtyType2, setItemQtyType2] = useState(0);
+    const [itemQtyType1, setItemQtyType1] = useState("");
+    const [itemQtyType2, setItemQtyType2] = useState("");
     const [typeOfChange, setTypeOfChange] = useState("");
 
     const [allBatches, setAllBatches] = useState([]);
@@ -68,6 +68,7 @@ function Update(props){
         const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
         setBatchesToDisplay(extractedBatches);
+        extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
     }
 
     useEffect(() => {
@@ -101,8 +102,8 @@ function Update(props){
     async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
         let batchData = {
             unit_id: batchSelected,
-            net_balance_type1: itemQtyType1,
-            net_balance_type2: itemQtyType1,
+            net_balance_type1: parseInt(itemQtyType1),
+            net_balance_type2: parseInt(itemQtyType2),
             type_of_change: typeOfChange
         }
 

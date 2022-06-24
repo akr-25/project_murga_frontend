@@ -55,7 +55,7 @@ function Entry(props){
             <div className="items-div">
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
-                        <Container className="flex form-heading"><h1>Create a New Entry</h1><hr></hr></Container>  
+                        <Container className="flex form-heading"><h1>Create a New Batch</h1><hr></hr></Container>  
                         <Form>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
@@ -91,7 +91,7 @@ function Entry(props){
                             </Form.Group> */}
 
                             <Button onClick={createNewBatch} variant="primary">
-                                Submit New Entry
+                                Create New Batch
                             </Button>
                         </Form>
                     </Container>

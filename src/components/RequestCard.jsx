@@ -30,10 +30,6 @@ async function handleConfirm(item, pendingRequests, pendingTxns, setPendingReque
             setPendingRequests(updatedPendingRequests);
 
             item.order_status = newOrderStatus;
-            // let updatedPendingTxns = pendingTxns;
-            // updatedPendingTxns.push(item);
-            // console.log(updatedPendingTxns);
-            // setPendingTxns(updatedPendingTxns);
             setPendingTxns([...pendingTxns, item]);
         }else{
             let updatedPendingTxns = pendingTxns.filter(checkedItem => item !== checkedItem);
@@ -79,6 +75,7 @@ function aRequest(item, requestType, pendingRequests, pendingTxns, setPendingReq
                     <hr></hr>
                     {/* <Card.Subtitle className="mb-2 text-muted">{item.itemType} - {item.quantity}</Card.Subtitle> */}
                     <Card.Text style={{fontWeight:"400", fontSize:"1.2em"}}>
+                        Buyer's ID: <strong>{item.applicant_id}</strong><br></br>
                         Item Type: <strong>{item.type_of_unit}</strong><br></br>
                         Item SubType: <strong>Egg</strong><br></br>
                         Quantity: <strong>{item.req_no_of_units}</strong><br></br>
