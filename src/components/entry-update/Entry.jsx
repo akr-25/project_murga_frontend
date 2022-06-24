@@ -1,28 +1,16 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {Form, Container, Button} from "react-bootstrap";
 import {NavbarMod as Navbar} from "../../components/Navbar";
 
 function Entry(props){
     const [itemType, setItemType] = useState("Chicken");
     const [itemSubType, setItemSubType] = useState("Egg");
-    const [itemQtyType1, setItemQtyType1] = useState(0);
-    const [itemQtyType2, setItemQtyType2] = useState(0);
-    const [itemPrice, setItemPrice] = useState(100);
 
     function handleItemType(e){
         setItemType(e.target.value);
     }
     function handleItemSubType(e){
         setItemSubType(e.target.value);
-    }
-    function handleItemQtyType1(e){
-        setItemQtyType1(e.target.value);
-    }
-    function handleItemQtyType2(e){
-        setItemQtyType2(e.target.value);
-    }
-    function handleItemPrice(e){
-        setItemPrice(e.target.value);
     }
     async function createNewBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
         let batchData = {
@@ -42,7 +30,7 @@ function Entry(props){
 
         if(res.message === "success"){
             //props.setUserID(3); // change it to the user ID fetched from response of above request.
-            alert("Batch Added successfully!");
+            alert(`Batch Added successfully! \n\nBatch ID : ${res.data.batch.batch_id}`);
         }else{
             console.log(res);
         }

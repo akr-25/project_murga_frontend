@@ -1,37 +1,35 @@
 import React, {useState, useEffect} from "react";
 import {Form, Container, Button} from "react-bootstrap";
-import {NavbarMod as Navbar} from "../Navbar";
 
 function PriceForm(props){
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
     const [newPrice, setNewPrice] = useState("");
-    const [dateOfNewPrice, setDateOfNewPrice] = useState("");
-    
+
     const [allBatches, setAllBatches] = useState([]);
 
-    const tp = [
-    {
-        batch_id: "CE-21",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CC-42",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DC-222",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CE-211",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DG-25",
-        is_active: "Y"
-    },
-];
+//     const tp = [
+//     {
+//         batch_id: "CE-21",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CC-42",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DC-222",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CE-211",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DG-25",
+//         is_active: "Y"
+//     },
+// ];
     const [batchesToDisplay, setBatchesToDisplay] = useState([]);
     const [batchSelected, setBatchSelected] = useState("");
     
@@ -45,10 +43,6 @@ function PriceForm(props){
     }
     function handleNewPrice(e){
         setNewPrice(e.target.value);
-    }
-    function handleDateOfNewPrice(e){
-        setDateOfNewPrice(e.target.value);
-        console.log(e.target.value);
     }
     function handleBatchSelected(e){
         console.log(e.target.value);
@@ -70,56 +64,61 @@ function PriceForm(props){
 
     useEffect(() => {
         async function fetchActiveBatches(){ 
+            try{
+                let res = await fetch("http://localhost:3001/api/batch/fetch", {
+                    method: "GET",
+                }); 
+        
+                res = await res.json();
+        
+                console.log("YES");
+                console.log(res); 
 
-            let res = await fetch("http://localhost:3001/api/batch/fetch", {
-                method: "GET",
-            }); 
-    
-            res = await res.json();
-    
-            console.log("YES");
-            console.log(res); 
-
-            if(res.message === "success"){
-                setAllBatches(res.data.batch);
-                handleBatchList("Chicken", "Egg");
-            }else{
-                console.log(res);
+                if(res.message === "success"){
+                    setAllBatches(res.data.batch);
+                    handleBatchList("Chicken", "Egg");
+                }else{
+                    console.log(res);
+                }
+            }catch(err){
+                console.log(err); 
             }
+            
         }
-        try{
-            fetchActiveBatches();
-        }
-        catch(err){
-          console.log(err); 
-        }
-      }, []);
+        fetchActiveBatches();
+      },[]);
     
     
 
     async function enterPriceLog(){ // update corresonding routes when ready
-        let priceData = {
-            "unit_id": batchSelected,
-            "price_per_unit": parseInt(newPrice)
+        try{
+            let priceData = {
+                "unit_id": batchSelected,
+                "price_per_unit": parseInt(newPrice)
+            }
+
+            console.log(priceData);
+            
+            let res = await fetch("http://localhost:3001/api/priceLog/create", {
+                method: "POST", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(priceData)
+            }); 
+
+            res = await res.json();
+
+            console.log(res); 
+
+            if(res.message === "success"){
+                alert("Price Updated Successfully");
+            }else{
+                console.log(res);
+            }
         }
-
-        console.log(priceData);
-        
-        let res = await fetch("http://localhost:3001/api/priceLog/create", {
-            method: "POST", 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(priceData)
-        }); 
-
-        res = await res.json();
-
-        console.log(res); 
-
-        if(res.message === "success"){
-            alert("Price Updated Successfully");
-        }else{
-            console.log(res);
+        catch(err){
+            console.log(err);
         }
+            
     }
 
     function ListABatch(batch){

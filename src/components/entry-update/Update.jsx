@@ -11,28 +11,28 @@ function Update(props){
 
     const [allBatches, setAllBatches] = useState([]);
 
-    const tp = [
-    {
-        batch_id: "CE-21",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CC-42",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DC-222",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CE-211",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DG-25",
-        is_active: "Y"
-    },
-];
+//     const tp = [
+//     {
+//         batch_id: "CE-21",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CC-42",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DC-222",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CE-211",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DG-25",
+//         is_active: "Y"
+//     },
+// ];
     const [batchesToDisplay, setBatchesToDisplay] = useState([]);
     const [batchSelected, setBatchSelected] = useState("");
     
@@ -71,35 +71,7 @@ function Update(props){
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
     }
 
-    useEffect(() => {
-        async function fetchActiveBatches(){ 
-
-            let res = await fetch("http://localhost:3001/api/batch/fetch", {
-                method: "GET",
-            }); 
-    
-            res = await res.json();
-    
-            console.log("YES");
-            console.log(res); 
-
-            if(res.message === "success"){
-                setAllBatches(res.data.batch);
-                handleBatchList("Chicken", "Egg");
-            }else{
-                console.log(res);
-            }
-        }
-        try{
-            fetchActiveBatches();
-        }
-        catch(err){
-          console.log(err); 
-        }
-      }, []);
-    
-
-    async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
+    async function prevBalanceLog(){ // here, there is a confusion regarding batch table and price table... Update it later
         let batchData = {
             unit_id: batchSelected,
             net_balance_type1: parseInt(itemQtyType1),
@@ -122,6 +94,65 @@ function Update(props){
         }else{
             console.log(res);
         }
+    }
+
+    useEffect(() => {
+        async function fetchActiveBatches(){ 
+            try{
+                let res = await fetch("http://localhost:3001/api/batch/fetch", {
+                    method: "GET",
+                }); 
+        
+                res = await res.json();
+        
+                console.log("YES");
+                console.log(res); 
+
+                if(res.message === "success"){
+                    setAllBatches(res.data.batch);
+                    handleBatchList("Chicken", "Egg");
+                }else{
+                    console.log(res);
+                }
+            }catch(err){
+                console.log(err); 
+            }
+            
+        }
+        fetchActiveBatches();
+      },[]);
+    
+    
+
+    async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
+        try{
+            let batchData = {
+                unit_id: batchSelected,
+                net_balance_type1: parseInt(itemQtyType1),
+                net_balance_type2: parseInt(itemQtyType2),
+                type_of_change: typeOfChange
+            }
+
+            let res = await fetch("http://localhost:3001/api/balanceLog/create", {
+                method: "POST", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(batchData)
+            }); 
+
+            res = await res.json();
+
+            console.log(res); 
+
+            if(res.message === "success"){
+                alert("Data updated successfully");
+            }else{
+                console.log(res);
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
+            
     }
 
     function ListABatch(batch){

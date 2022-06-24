@@ -53,22 +53,21 @@ function ReqHistory() {
 
   useEffect(() => {
     async function fetchData(){
-      let res = await fetch("http://localhost:3001/api/request/fetch", {
-        method: "GET", }); 
+      try{
+        let res = await fetch("http://localhost:3001/api/request/fetch", {
+          method: "GET", }); 
 
-      res = await res.json();
+        res = await res.json();
 
-      const fetchedData = res.data.requests.map(MapData);
-      allData = fetchedData;
-      allData.length === 0 ? setTableData(reqHistoryData) : setTableData(fetchedData);
+        const fetchedData = res.data.requests.map(MapData);
+        allData = fetchedData;
+        allData.length === 0 ? setTableData(reqHistoryData) : setTableData(fetchedData);
+      }
+      catch(err){
+        console.log(err);
+      } 
     }
-    
-    try{
-      fetchData();
-    }
-    catch(err){
-      console.log(err); 
-    }
+    fetchData();
   }, []);
 
   // Function to filter data as per sort option clicked. 

@@ -1,38 +1,36 @@
 import React, {useState, useEffect} from "react";
 import {Form, Container, Button} from "react-bootstrap";
-import {NavbarMod as Navbar} from "../Navbar";
 
 function FeedForm(props){
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
     const [foodQty, setFoodQty] = useState(0);
-    const [foodPrice, setFoodPrice] = useState(100);
-    const [dateOfFeed, setDateOfFeed] = useState();
+    const [foodPrice, setFoodPrice] = useState(0);
 
     const [allBatches, setAllBatches] = useState([]);
 
-    const tp = [
-    {
-        batch_id: "CE-21",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CC-42",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DC-222",
-        is_active: "Y"
-    },
-    {
-        batch_id: "CE-211",
-        is_active: "Y"
-    },
-    {
-        batch_id: "DG-25",
-        is_active: "Y"
-    },
-];
+//     const tp = [
+//     {
+//         batch_id: "CE-21",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CC-42",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DC-222",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "CE-211",
+//         is_active: "Y"
+//     },
+//     {
+//         batch_id: "DG-25",
+//         is_active: "Y"
+//     },
+// ];
     const [batchesToDisplay, setBatchesToDisplay] = useState([]);
     const [batchSelected, setBatchSelected] = useState("");
     
@@ -49,10 +47,6 @@ function FeedForm(props){
     }
     function handleFoodPrice(e){
         setFoodPrice(e.target.value);
-    }
-    function handleDateOfFeed(e){
-        setDateOfFeed(e.target.value);
-        console.log(e.target.value);
     }
     function handleBatchSelected(e){
         console.log(e.target.value);
@@ -74,54 +68,58 @@ function FeedForm(props){
 
     useEffect(() => {
         async function fetchActiveBatches(){ 
+            try{
+                let res = await fetch("http://localhost:3001/api/batch/fetch", {
+                    method: "GET",
+                }); 
+        
+                res = await res.json();
+        
+                console.log("YES");
+                console.log(res); 
 
-            let res = await fetch("http://localhost:3001/api/batch/fetch", {
-                method: "GET",
-            }); 
-    
-            res = await res.json();
-    
-            console.log("YES");
-            console.log(res); 
-
-            if(res.message === "success"){
-                setAllBatches(res.data.batch);
-                handleBatchList("Chicken", "Egg");
-            }else{
-                console.log(res);
+                if(res.message === "success"){
+                    setAllBatches(res.data.batch);
+                    handleBatchList("Chicken", "Egg");
+                }else{
+                    console.log(res);
+                }
+            }catch(err){
+                console.log(err); 
             }
+            
         }
-        try{
-            fetchActiveBatches();
-        }
-        catch(err){
-          console.log(err); 
-        }
-      }, []);
+        fetchActiveBatches();
+      },[]);
     
 
 
     async function enterFeedLog(){ // update corresonding routes when ready
-        let feedData = {
-            unit_id: batchSelected,
-            rate: foodQty,
-            cost_per_gram: foodPrice
+        try{
+            let feedData = {
+                unit_id: batchSelected,
+                rate: foodQty,
+                cost_per_gram: foodPrice
+            }
+            
+            let res = await fetch("http://localhost:3001/api/feedConsumptionLog/create", {
+                method: "POST", 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(feedData)
+            }); 
+    
+            res = await res.json();
+    
+            console.log(res); 
+    
+            if(res.message === "success"){
+                alert("Feed data logged successfully");
+            }else{
+                console.log(res);
+            }
         }
-        
-        let res = await fetch("http://localhost:3001/api/feedConsumptionLog/create", {
-            method: "POST", 
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(feedData)
-        }); 
-
-        res = await res.json();
-
-        console.log(res); 
-
-        if(res.message === "success"){
-            alert("Feed data logged successfully");
-        }else{
-            console.log(res);
+        catch(err){
+            console.log(err);
         }
     }
 
@@ -152,7 +150,6 @@ function FeedForm(props){
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
                                 <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
                                     <option name="-">Select Item SubType</option>
-                                    <option name="E">Egg</option>
                                     <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
                                     <option name="L">Layer</option>
                                     <option name="G">Grower</option>
