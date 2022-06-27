@@ -68,7 +68,12 @@
 }
 
 .form-heading{
-  margin:0%;
+  text-align: center;
+}
+
+.form-heading hr{
+  height: 3px;
+  margin-bottom: 30px;
 }
 
 .form-container{
@@ -85,8 +90,20 @@
 }
 
 .form-control{
-  background-color: #9C9C9C;
-  color:white;
+  /* background-color: #9C9C9C; */
+  /* color:white; */
   font-weight:600;
-  font-size:0.8em
+  font-size:1em
+}
+
+/* .items-div{
+  display: flex;
+} */
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
 }

@@ -1,6 +1,7 @@
-import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
-import React from 'react';
-import Sidebar from '../components/Sidebar-off-canvas';
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
+import React, {useState} from 'react';
+import Sidebar from "./Sidebar-off-canvas";
+import {NavLink} from "react-router-dom";
 
 function NavbarMod(props){
     
@@ -18,14 +19,7 @@ function NavbarMod(props){
             <Navbar.Collapse>
             
             <Nav className="nav-items">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <NavDropdown title="My Account">
-                <NavDropdown.Item href="#account/notifications">
-                <img className="dropdownIconImg" src="https://www.pinclipart.com/picdir/big/189-1895786_big-image-transparent-background-notification-icon-clipart.png" alt="Notification"></img>Notifications</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#account/logout">
-                <img className="dropdownIconImg" src="https://cdn-icons-png.flaticon.com/512/17/17367.png" alt="Logout"></img>Logout</NavDropdown.Item>
-                </NavDropdown>
+                <NavLink className="navbar-item" to="/logout">Logout</NavLink>
             </Nav>
             </Navbar.Collapse>
 
@@ -35,4 +29,4 @@ function NavbarMod(props){
     )
 }
 
-export default NavbarMod;
+    export {NavbarMod};

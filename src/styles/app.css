@@ -1,0 +1,160 @@
+#root{
+    background-color: #F8F9FC;
+}
+
+.color-nav{
+    background-color: #fff;
+    color: #000;
+}
+
+.adminLandingHeader{
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+    font-size: 40px;
+    color: #000;
+    text-decoration: underline;
+}
+
+.nav-greeting{
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+    font-size: 35px;
+    color: #000;
+}
+
+.nav-items{
+    font-size: 23px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+.navbar-item{
+    margin-right: 20px;
+    color: #666;
+}
+
+.navbar-light .navbar-nav .nav-link, .navbar-light .navbar-nav .show>.nav-link{
+    margin-right: 15px;
+    color: rgba(0, 0, 0, 0.61)!important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .show>.nav-link:hover{
+    color: rgba(0, 0, 0, 1)!important;
+}
+
+.dropdownIconImg{
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+}
+
+.cardBox{
+    margin: 30px;
+    padding-bottom: 20px;
+}
+
+
+
+/* reqHistory page */
+.table-striped > tbody > tr:nth-child(2n + 1) > td, .table-striped > tbody > tr:nth-child(2n + 1) > th {
+    background-color: #FFF;
+ }
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: #f0edfb;
+ }
+
+.pageTitle{
+    text-align: center;
+}
+
+.tableData{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+.pagination{
+    justify-content: right;
+}
+
+.tableDiv{
+    padding: 40px;
+}
+
+/* Date Range Selector Component */
+input.inputBox {
+    font-size: 18px;
+    padding: 5px 8px 4px 8px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    margin-right: 10px;
+}
+  
+.calendarWrap {
+    background-color: #e4e0fa;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 40px;
+    padding: 10px;
+    border-radius: 8px;
+}
+.calendarWrap label{
+    font-size: 20px;
+    margin-right: 20px;
+    font-weight: 400;
+}
+  
+.calendarElement {
+    position: absolute;
+    left: 30%;
+    /* transform: translateX(-50%); */
+    /* top: 40px; */
+    border: 1px solid #ccc;
+    z-index: 999;
+}
+
+.sortWrap{
+    background-color: #e4e0fa;
+    /* display: inline-block; */
+    /* position: relative; */
+    margin-top: 10px;
+    margin-left: 40px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.sortWrap label{
+    font-size: 20px;
+    margin-right: 20px;
+    font-weight: 400;
+}
+
+.sortWrap button{
+    margin-right: 10px;
+}
+
+.containerDateSort{
+    display: flex;
+}
+
+.tableFooter{
+    display: flex;
+    justify-content: right;
+}
+
+.footer-1{
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+.cart{
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.cart-items{
+    justify-items: center;
+}
