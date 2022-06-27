@@ -122,14 +122,15 @@ function PlaceOrder(props){
             unit_id: batchSelected,
             order_status: "Pending For Approval",
             type_of_unit: typeOfUnit,
-            no_of_units_type1: itemQty1,
-            no_of_units_type2: itemQty2,
+            // no_of_units_type1: itemQty1,
+            // no_of_units_type2: itemQty2,
+            req_no_of_units: itemQty1+itemQty2,
             selling_price_per_unit: 100 * (itemQty1 + itemQty2), // fetch item price when both item type and item sub type are selected
             order_type: orderType,
 
 
-            updated_net_balance_type1: parseInt(itemQty1),
-            updated_net_balance_type2: parseInt(itemQty2)
+            // updated_net_balance_type1: parseInt(itemQty1),
+            // updated_net_balance_type2: parseInt(itemQty2)
         }
 
         console.log(orderData);
