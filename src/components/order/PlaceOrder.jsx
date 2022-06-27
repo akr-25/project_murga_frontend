@@ -5,12 +5,13 @@ import {Form, Container, Button} from "react-bootstrap";
 
 
 
-function PlaceOrder(){
+function PlaceOrder(props){
 
     const [orderType, setOrderType] = useState("SELL");
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
-    const [itemQty, setItemQty] = useState(0);
+    const [itemQty1, setItemQty1] = useState(0);
+    const [itemQty2, setItemQty2] = useState(0);
     const [itemPrice, setItemPrice] = useState();
     const [itemSellPrice, setItemSellPrice] = useState(100);
     const [allPrices, setAllPrices] = useState([]);
@@ -31,8 +32,11 @@ function PlaceOrder(){
         setItemSubType(e.target.value);
         handleBatchList(itemType, e.target.value);
     }
-    function handleItemQty(e){
-        setItemQty(e.target.value);
+    function handleItemQty1(e){
+        setItemQty1(e.target.value);
+    }
+    function handleItemQty2(e){
+        setItemQty2(e.target.value);
     }
     function handleItemSellPrice(e){
         setItemSellPrice(e.target.value);
@@ -114,12 +118,18 @@ function PlaceOrder(){
         const typeOfUnit = itemType.substring(0,1) + itemSubType.substring(0, 1);
     
         const orderData = {
-            applicant_id: "1", //Fetch userID after admin enters user details, and put it here
+            applicant_id: props.userID, //Fetch userID after admin enters user details, and put it here
+            unit_id: batchSelected,
             order_status: "Pending For Approval",
             type_of_unit: typeOfUnit,
-            req_no_of_units: itemQty,
-            price: 100 * itemQty, // fetch item price when both item type and item sub type are selected
-            order_type: orderType
+            no_of_units_type1: itemQty1,
+            no_of_units_type2: itemQty2,
+            selling_price_per_unit: 100 * (itemQty1 + itemQty2), // fetch item price when both item type and item sub type are selected
+            order_type: orderType,
+
+
+            updated_net_balance_type1: parseInt(itemQty1),
+            updated_net_balance_type2: parseInt(itemQty2)
         }
 
         console.log(orderData);
@@ -139,7 +149,8 @@ function PlaceOrder(){
             setOrderType("SELL");
             setItemType("Chick");
             setItemSubType("Egg");
-            setItemQty(0);
+            setItemQty1(0);
+            setItemQty2(0);
             setItemPrice(0);
         }else{
             console.log(res);
@@ -195,8 +206,21 @@ function PlaceOrder(){
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity</Form.Label>
-                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty} onChange={(e) => handleItemQty(e)}/>
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em", textDecoration: "underline"}}><strong>Available Quantity of Type-1: {itemPrice}</strong></Form.Label>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 1</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty1} onChange={(e) => handleItemQty1(e)}/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em", textDecoration: "underline"}}><strong>Available Quantity of Type-2: {itemPrice}</strong></Form.Label>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 2</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty2} onChange={(e) => handleItemQty2(e)}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">

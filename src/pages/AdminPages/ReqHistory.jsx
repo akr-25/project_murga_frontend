@@ -33,7 +33,7 @@ function ReqHistory() {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = tableData.slice(indexOfFirstRow, indexOfLastRow);
 
-  function MapData(row){
+  function MapData(row, index){
     const orderYear = row.createdAt.substring(0, 4);
     const orderMonth = row.createdAt.substring(5, 7);
     const orderDate = row.createdAt.substring(8, 10);
@@ -42,7 +42,7 @@ function ReqHistory() {
     const statusMonth = row.createdAt.substring(5, 7);
     const statusDate = row.createdAt.substring(8, 10);
     
-    return {sNo: row.request_id,
+    return {sNo: index + 1,
     orderNo: row.request_id,
     custName: row.User.first_name + " " + row.User.last_name,
     amt: "Rs. " + row.price,
@@ -59,7 +59,7 @@ function ReqHistory() {
 
         res = await res.json();
 
-        const fetchedData = res.data.requests.map(MapData);
+        const fetchedData = res.data.requests.map((currentRow, index) => MapData(currentRow, index));
         allData = fetchedData;
         allData.length === 0 ? setTableData(reqHistoryData) : setTableData(fetchedData);
       }

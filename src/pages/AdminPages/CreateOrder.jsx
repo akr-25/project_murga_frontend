@@ -10,7 +10,7 @@ function CreateOrder(){
     return (
         <div className="pg">
             <Navbar></Navbar>
-            {userID === "" ? <UserDetails setUserID={setUserID}></UserDetails> : <PlaceOrder></PlaceOrder>}
+            {userID === "" ? <UserDetails setUserID={setUserID}></UserDetails> : <PlaceOrder userID={userID}></PlaceOrder>}
         </div>
     );
 }
