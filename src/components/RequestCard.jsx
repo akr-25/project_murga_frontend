@@ -77,8 +77,9 @@ function aRequest(item, requestType, pendingRequests, pendingTxns, setPendingReq
                         Batch ID: <strong>{item.unit_id}</strong><br></br>
                         Item Type: <strong>{item.type_of_unit}</strong><br></br>
                         Item SubType: <strong>Egg</strong><br></br>
-                        Quantity: <strong>{item.req_no_of_units}</strong><br></br>
-                        Price: <strong>{item.price}</strong>
+                        Quantity Type -1: <strong>{item.req_no_of_units_type1}</strong><br></br>
+                        Quantity Type -2: <strong>{item.req_no_of_units_type2}</strong><br></br>
+                        Price: <strong>{item.selling_price_per_unit}</strong>
                     </Card.Text>
                     <div>
                         <Button onClick={() => handleConfirm(item, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns)} variant={requestType === "Request" ? "primary" : "success"}>{requestType === "Request" ? "Approve" : "Complete"}</Button>{'    '}
