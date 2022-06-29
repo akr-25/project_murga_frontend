@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo/admin-img.png";
-import MenuItem from "./MenuItem";
-
+import '../App.css';
 export const menuItems = [
   {
     name: "Entry/Update",
