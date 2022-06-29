@@ -1,23 +1,16 @@
-import React, { useState } from "react";
-import Sidebar from "../../components/Sidebar";
+import React from "react";
+import {NavbarMod as Navbar} from "../../components/Navbar";
+import PriceForm from "../../components/price/PriceForm";
 import "../../App.css";
 
-function PricingTable() {
-  const [inactive, setInactive] = useState(true);
+function PriceLog() {
 
   return (
-    <div className="App">
-      <Sidebar
-        onCollapse={(inactive) => {
-          setInactive(inactive);
-        }}
-      />
-
-      <div className={`page_container ${inactive ? "inactive" : ""}`}>
-        <h1>PricingTable</h1>
-      </div>
+    <div className="pg">
+      <Navbar/>
+      <PriceForm />
     </div>
   );
 }
 
-export default PricingTable;
+export default PriceLog;

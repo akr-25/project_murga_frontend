@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import Sidebar from "../../components/Sidebar";
-import "../../App.css";
+import React from "react";
+import {NavbarMod as Navbar} from "../../components/Navbar";
+import FeedForm from "../../components/feed/FeedForm";
+// import "../../App.css";
 
 function FeedLog() {
-  const [inactive, setInactive] = useState(true);
+
 
   return (
-    <div className="App">
-      <Sidebar
-        onCollapse={(inactive) => {
-          setInactive(inactive);
-        }}
-      />
-
-      <div className={`page_container ${inactive? "inactive":""}`}>
-        <h1>FeedLog</h1>
-      </div>
+    <div className="pg">
+      <Navbar/>
+      <FeedForm />
     </div>
   );
 }

@@ -1,15 +1,31 @@
-import axios from 'axios';
 import React from 'react';
-import { BACKEND_URLS } from '../config/urls';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 export default function LogOut() {
     const { auth } = useAuth(); 
+    const navigate = useNavigate(); 
 
-    const logOut = async (event) => {
+    function logOut(event){
         event.preventDefault();
-        // await axios.post(BACKEND_URLS.AUTH.LOGOUT, {}); //!FIX THIS
-        window.open(BACKEND_URLS.AUTH.LOGOUT, "_self")
+        try{
+            fetch("http://localhost:3001/auth/logout", {
+                credentials: 'include', 
+                redirect: 'follow', 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(res => res.json())
+            .then(data => navigate("/"))
+            .catch(err => console.log(err))
+        }
+        catch(err){
+            console.log(err); 
+        }
+        
+
+        // event.preventDefault();
+        // window.open("http://localhost:3001/auth/logout", "_self")
     }
     
     return <div>

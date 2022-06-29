@@ -10,9 +10,7 @@ import EntryUpdate from './pages/AdminPages/EntryUpdate';
 import FeedLog from './pages/AdminPages/FeedLog';
 import PricingTable from './pages/AdminPages/PricingTable';
 import ReqHistory from './pages/AdminPages/ReqHistory';
-
 import './App.css';
-
 
 export default function App() {
   return (
