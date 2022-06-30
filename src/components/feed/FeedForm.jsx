@@ -164,7 +164,7 @@ function FeedForm(props){
                             </Form.Group>
 
                         <Form.Group className="mb-3" controlId="food_quantity">
-                            <Form.Label className="form-label">Food per Piece (in grams)</Form.Label>
+                            <Form.Label className="form-label">Food per Unit (in grams)</Form.Label>
                             <Form.Control value={foodQty} onChange={(e) => handleFoodQty(e)} type="number" placeholder="0" className="form-control"/>
                         </Form.Group>
 

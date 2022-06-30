@@ -45,7 +45,7 @@ function UserDetails(props){
         console.log(res); 
 
         if(res.message === "success"){
-            props.setUserID(3); // change it to the user ID fetched from response of above request.
+            props.setUserID(res.data.user.user_id); // change it to the user ID fetched from response of above request.
             alert("User Fetched Successfully");
         }else{
             console.log(res);

@@ -5,13 +5,16 @@ import {Form, Container, Button} from "react-bootstrap";
 
 
 
-function PlaceOrder(){
+function PlaceOrder(props){
 
     const [orderType, setOrderType] = useState("SELL");
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
-    const [itemQty, setItemQty] = useState(0);
+    const [itemQty1, setItemQty1] = useState(0);
+    const [itemQty2, setItemQty2] = useState(0);
     const [itemPrice, setItemPrice] = useState();
+    const [availableItemQty1, setAvailableItemQty1] = useState(0);
+    const [availableItemQty2, setAvailableItemQty2] = useState(0);
     const [itemSellPrice, setItemSellPrice] = useState(100);
     const [allPrices, setAllPrices] = useState([]);
 
@@ -31,16 +34,20 @@ function PlaceOrder(){
         setItemSubType(e.target.value);
         handleBatchList(itemType, e.target.value);
     }
-    function handleItemQty(e){
-        setItemQty(e.target.value);
+    function handleItemQty1(e){
+        setItemQty1(e.target.value);
+    }
+    function handleItemQty2(e){
+        setItemQty2(e.target.value);
     }
     function handleItemSellPrice(e){
         setItemSellPrice(e.target.value);
     }
     function handleBatchSelected(e){
-        //console.log(e.target.value);
+        console.log(e.target.value);
         setBatchSelected(e.target.value);
         fetchPrice(e.target.value);
+        fetchBalanceLog(e.target.value);
     }
     function handleBatchList(item, subItem){
         let itemTypeCode = item.substring(0, 1);
@@ -56,25 +63,60 @@ function PlaceOrder(){
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
     }
 
-    async function fetchPrice(batchCode){
-        console.log(batchCode);
-        let res = await fetch("http://localhost:3001/api/priceLog/fetch/" + batchCode, {
-            method: "GET",
-        }); 
-
-        res = await res.json();
-
-        console.log("YES");
-        console.log(res); 
-
-        if(res.message === "success"){
-            setItemPrice(res.data.price);
-        }else{
-            console.log(res);
-        }
-    
+    async function fetchPrice(selectedBatchCode){
+        //console.log(batchCode);
         try{
-            fetchPrice();
+            let res = await fetch("http://localhost:3001/api/priceLog/fetch/", {
+                method: "GET",
+            }); 
+
+            res = await res.json();
+
+            let tmpArray = res.data.pricelogs.filter(item => item.batch_id === selectedBatchCode);
+            // console.log(tmpArray[0].BalanceLogs[0].net_balance_type1);
+            // console.log(tmpArray[0].BalanceLogs[0].net_balance_type2);
+
+            if(res.message === "success"){
+                console.log(tmpArray[0]);
+                tmpArray[0].PriceLogs.length !== 0 ? setItemPrice(tmpArray[0].PriceLogs[0].price_per_unit) : setItemPrice(0);
+                
+            }else{
+                console.log(res);
+            }
+        }
+        catch(err){
+          console.log(err); 
+        }
+    }
+
+    async function fetchBalanceLog(selectedBatchCode){
+        //console.log(batchCode);
+        try{
+            let res = await fetch("http://localhost:3001/api/balanceLog/fetch/", {
+                method: "GET",
+            }); 
+
+            res = await res.json();
+
+            //console.log("YES");
+            //console.log(res.data.balancelogs[0].batch_id); 
+
+            let tmpArray = res.data.balancelogs.filter(item => item.batch_id === selectedBatchCode);
+            // console.log(tmpArray[0].BalanceLogs[0].net_balance_type1);
+            // console.log(tmpArray[0].BalanceLogs[0].net_balance_type2);
+
+            if(res.message === "success"){
+                if(tmpArray[0].BalanceLogs.length !== 0){
+                    setAvailableItemQty1(tmpArray[0].BalanceLogs[0].net_balance_type1);
+                    setAvailableItemQty2(tmpArray[0].BalanceLogs[0].net_balance_type2);
+                }else{
+                    setItemQty1(0);
+                    setItemQty2(0);
+                }
+                
+            }else{
+                console.log(res);
+            }
         }
         catch(err){
           console.log(err); 
@@ -114,12 +156,18 @@ function PlaceOrder(){
         const typeOfUnit = itemType.substring(0,1) + itemSubType.substring(0, 1);
     
         const orderData = {
-            applicant_id: "1", //Fetch userID after admin enters user details, and put it here
+            applicant_id: props.userID, //Fetch userID after admin enters user details, and put it here
+            unit_id: batchSelected,
             order_status: "Pending For Approval",
             type_of_unit: typeOfUnit,
-            req_no_of_units: itemQty,
-            price: 100 * itemQty, // fetch item price when both item type and item sub type are selected
-            order_type: orderType
+            req_no_of_units_type1: itemQty1,
+            req_no_of_units_type2: itemQty2,
+            selling_price_per_unit: itemSellPrice * (itemQty1 + itemQty2), // fetch item price when both item type and item sub type are selected
+            order_type: orderType,
+
+
+            // updated_net_balance_type1: parseInt(itemQty1),
+            // updated_net_balance_type2: parseInt(itemQty2)
         }
 
         console.log(orderData);
@@ -139,7 +187,8 @@ function PlaceOrder(){
             setOrderType("SELL");
             setItemType("Chick");
             setItemSubType("Egg");
-            setItemQty(0);
+            setItemQty1(0);
+            setItemQty2(0);
             setItemPrice(0);
         }else{
             console.log(res);
@@ -195,12 +244,25 @@ function PlaceOrder(){
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity</Form.Label>
-                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty} onChange={(e) => handleItemQty(e)}/>
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of Type-1:</u> {availableItemQty1}</strong></Form.Label>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em", textDecoration: "underline"}}><strong>Current Price per Unit: Rs. {itemPrice} </strong></Form.Label>
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 1</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty1} onChange={(e) => handleItemQty1(e)}/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of Type-2:</u> {availableItemQty2}</strong></Form.Label>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 2</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty2} onChange={(e) => handleItemQty2(e)}/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em", textDecoration: "underline"}}><strong>Current Price per Unit: {`Rs. ${itemPrice}`} </strong></Form.Label>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
