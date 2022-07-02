@@ -84,6 +84,7 @@ function Update(props){
 
         setBatchesToDisplay(extractedBatches);
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
+        extractedBatches.length > 0 ? fetchTypeNames(extractedBatches[0]) : fetchTypeNames("");
     }
 
     async function prevBalanceLog(){ // here, there is a confusion regarding batch table and price table... Update it later

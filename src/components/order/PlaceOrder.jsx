@@ -12,7 +12,7 @@ function PlaceOrder(props){
     const [itemSubType, setItemSubType] = useState("-");
     const [itemQty1, setItemQty1] = useState(0);
     const [itemQty2, setItemQty2] = useState(0);
-    const [itemPrice, setItemPrice] = useState();
+    const [itemPrice, setItemPrice] = useState(0);
     const [availableItemQty1, setAvailableItemQty1] = useState(0);
     const [availableItemQty2, setAvailableItemQty2] = useState(0);
     const [itemSellPrice, setItemSellPrice] = useState(100);
@@ -54,6 +54,7 @@ function PlaceOrder(props){
         fetchTypeNames(e.target.value);
     }
     function fetchTypeNames(batch_id){
+        console.log(batch_id);
         if(batch_id[1] === 'E'){
             setItemType1Name("Table");
             setItemType2Name("Hatching");
@@ -76,7 +77,9 @@ function PlaceOrder(props){
         const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
         setBatchesToDisplay(extractedBatches);
+        console.log(extractedBatches[0]);
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
+        extractedBatches.length > 0 ? fetchTypeNames(extractedBatches[0]) : fetchTypeNames("");
     }
 
     async function fetchPrice(selectedBatchCode){
