@@ -7,6 +7,9 @@ function Update(props){
     const [itemQtyType1, setItemQtyType1] = useState("");
     const [itemQtyType2, setItemQtyType2] = useState("");
     const [typeOfChange, setTypeOfChange] = useState("");
+    const [isLoading, setLoading] = useState(false);
+    const [itemType1Name, setItemType1Name] = useState("");
+    const [itemType2Name, setItemType2Name] = useState("");
 
     const [allBatches, setAllBatches] = useState([]);
 
@@ -55,8 +58,20 @@ function Update(props){
     function handleBatchSelected(e){
         console.log(e.target.value);
         setBatchSelected(e.target.value);
+        fetchTypeNames(e.target.value);
     }
-    
+    function fetchTypeNames(batch_id){
+        if(batch_id[1] === 'E'){
+            setItemType1Name("Table");
+            setItemType2Name("Hatching");
+        }else if(batch_id[1] === 'C' || batch_id[1] === 'D'){
+            batch_id[1] === 'C' ? setItemType1Name("Chick") : setItemType1Name("Duckling");
+            setItemType2Name(null);
+        }else if(batch_id[1] === 'L' || batch_id[1] === 'G'){
+            setItemType1Name("Male");
+            setItemType2Name("Female");
+        }
+    }
     function handleBatchList(item, subItem){
         let itemTypeCode = item.substring(0, 1);
         let itemSubTypeCode = subItem.substring(0, 1);
@@ -124,7 +139,10 @@ function Update(props){
     
     
 
-    async function updateBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
+    async function updateBatch(e){ // here, there is a confusion regarding batch table and price table... Update it later
+        e.preventDefault();
+        setLoading(true);
+
         try{
             let batchData = {
                 unit_id: batchSelected,
@@ -152,6 +170,7 @@ function Update(props){
         catch(err){
             console.log(err);
         }
+        setLoading(false);
             
     }
 
@@ -168,7 +187,7 @@ function Update(props){
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
                         <Container className="flex form-heading"><h1>Update An Entry</h1><hr></hr></Container>  
-                        <Form>
+                        <Form onSubmit={updateBatch}>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
                                 <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -196,23 +215,27 @@ function Update(props){
                                 </Form.Select>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="type1_quantity">
-                                <Form.Label className="form-label">Quantity-Type 1</Form.Label>
-                                <Form.Control value={itemQtyType1} onChange={(e) => handleItemQtyType1(e)} type="number" placeholder="0" className="form-control"/>
-                            </Form.Group>
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity {itemType1Name}</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQtyType1} onChange={(e) => handleItemQtyType1(e)}/>
+                        </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="type2_quantity">
-                                <Form.Label className="form-label">Quantity-Type 2</Form.Label>
-                                <Form.Control value={itemQtyType2} onChange={(e) => handleItemQtyType2(e)} type="number" placeholder="0" className="form-control"/>
-                            </Form.Group>
+
+                        {itemType2Name !== null ? 
+                        <Form.Group className="mb-3" controlId="quantity">
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity {itemType2Name}</Form.Label>
+                        <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQtyType2} onChange={(e) => handleItemQtyType2(e)}/>
+                        </Form.Group>
+                        : 
+                        null}
 
                             <Form.Group className="mb-3" controlId="price">
                                 <Form.Label className="form-label">Type of change / Reason for Update</Form.Label>
                                 <Form.Control value={typeOfChange} onChange={(e) => handleTypeOfChange(e)} type="text" placeholder="e.g Item sold" className="form-control"/>
                             </Form.Group>
 
-                            <Button onClick={updateBatch} variant="primary">
-                                Update Entry
+                            <Button disabled={isLoading} type="submit" variant="primary">
+                                {isLoading ? "Loading..." : "Update Entry"}
                             </Button>
                         </Form>
                     </Container>

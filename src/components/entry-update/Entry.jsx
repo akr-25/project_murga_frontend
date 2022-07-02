@@ -4,6 +4,8 @@ import {Form, Container, Button} from "react-bootstrap";
 function Entry(){
     const [itemType, setItemType] = useState("Chicken");
     const [itemSubType, setItemSubType] = useState("Egg");
+    const [isLoading, setLoading] = useState(false);
+
 
     function handleItemType(e){
         setItemType(e.target.value);
@@ -12,7 +14,10 @@ function Entry(){
         setItemSubType(e.target.value);
     }
 
-    async function createNewBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
+    async function createNewBatch(e){ // here, there is a confusion regarding batch table and price table... Update it later
+        e.preventDefault();
+        setLoading(true);
+
         let batchData = {
             type: itemType,
             sub_type: itemSubType
@@ -27,6 +32,7 @@ function Entry(){
         res = await res.json();
 
         console.log(res); 
+        setLoading(false);
 
         if(res.message === "success"){
             //props.setUserID(3); // change it to the user ID fetched from response of above request.
@@ -43,7 +49,7 @@ function Entry(){
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
                         <Container className="flex form-heading"><h1>Create a New Batch</h1><hr></hr></Container>  
-                        <Form>
+                        <Form onSubmit={createNewBatch}>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
                                 <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -77,8 +83,8 @@ function Entry(){
                                 <Form.Control value={itemPrice} onChange={(e) => handleItemPrice(e)} type="number" placeholder="Rs.0" className="form-control"/>
                             </Form.Group> */}
 
-                            <Button onClick={createNewBatch} variant="primary">
-                                Create New Batch
+                            <Button disabled={isLoading} type="submit" variant="primary">
+                                {isLoading ? "Loading..." : "Create New Batch"}
                             </Button>
                         </Form>
                     </Container>

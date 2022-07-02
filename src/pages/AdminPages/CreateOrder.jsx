@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {NavbarMod as Navbar} from "../../components/NavigationBar";
 import PlaceOrder from "../../components/order/PlaceOrder";
 import UserDetails from "../../components/order/UserDetails";
 
