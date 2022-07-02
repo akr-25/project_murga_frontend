@@ -24,6 +24,7 @@ function UserDetails(props){
     function handleUserAddress(e){
         setUserAddress(e.target.value);
     }
+    
     async function submitDetails(){
         const userData = {
             first_name: firstName,

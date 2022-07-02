@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../App.css";
 import "../../styles/app.css";
 import {Table} from 'react-bootstrap'
-import {NavbarMod as Navbar} from '../../components/Navbar';
+import {NavbarMod as Navbar} from '../../components/NavigationBar';
 import DateRangeComp from "../../components/table/DateRangeSelector";
 import THead from "../../components/table/THead";
 import TBody from "../../components/table/TBody";
@@ -103,8 +103,6 @@ function ReqHistory() {
 
   return (
     <div>
-      <Navbar></Navbar>
-
       <h1 className="pageTitle">Requests History</h1>
       <div className="containerDateSort">
         <DateRangeComp></DateRangeComp>

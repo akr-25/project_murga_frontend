@@ -1,53 +1,50 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { BACKEND_URLS } from "../config/urls";
 
 const AuthContext = createContext(null);
 
-export function useAuth(){
-    return useContext(AuthContext)
+export function useAuth() {
+  return useContext(AuthContext);
 }
 
-export function AuthProvider({children}){
-    const [auth, setAuth] = useState(false)
-    const [user, setUser] = useState({})
+export function AuthProvider({ children }) {
+  const [auth, setAuth] = useState(false);
+  const [user, setUser] = useState({});
 
-    useEffect(() => {
-            fetch("http://localhost:3001/auth/status", {
-                credentials: 'include'
-            })
-            .then(res => res.json())
-            .then((result) => {
-                console.log(result);
-                if(result.auth){
-                    setAuth(true)
-                    setUser(result.user)
-                }
-            })
-            .catch(e => console.log(e))
-    }, [])
+  useEffect(() => {
+    const asyncFunc = async () => {
+      try {
+        const response = await axios.get(BACKEND_URLS.AUTH.STATUS, {
+          withCredentials: true,
+        });
+        if (response.data.auth === true) {
+          setAuth(true);
+          setUser(response.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    asyncFunc();
+  }, []);
 
-    const value = {
-        user,
-        auth
-    }
+  const value = {
+    user,
+    auth,
+  };
 
-    return (
-        <AuthContext.Provider value={value}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function RequireAuth({ children }) {
-    const { auth } = useAuth();
-    const location = useLocation();
-    console.log(auth);
-    
-  
-    if (!auth) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
-    }
-  
-    return children;
-}
+  const { auth } = useAuth();
+  const location = useLocation();
 
+  if (!auth) {
+    return <Navigate to='/login' state={{ from: location }} replace />;
+  }
+
+  return children;
+}

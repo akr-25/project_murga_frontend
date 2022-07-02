@@ -1,18 +1,16 @@
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import React, {useState} from 'react';
-import Sidebar from "./Sidebar-off-canvas";
+import Sidebar from "./Sidebar";
 import {NavLink} from "react-router-dom";
 
-function NavbarMod(props){
-    
-    //startTyping();
+export default function NavigationBar(){
     return(
     <div>
         <Navbar className="color-nav" variant="light"
             sticky="top" expand="sm" collapseOnSelect>
             <Navbar.Brand>
             {/* <img src={logo} width="40px" height="40px" />{' '} */}
-            <Sidebar/>
+                <Sidebar/>
             </Navbar.Brand>
 
             <Navbar.Toggle className="coloring" />
@@ -24,9 +22,6 @@ function NavbarMod(props){
             </Navbar.Collapse>
 
         </Navbar>
-        {/* {props.children} */}
     </div>
     )
 }
-
-    export {NavbarMod};
