@@ -1,9 +1,24 @@
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import React, {useState} from 'react';
 import Sidebar from "./Sidebar";
-import {NavLink} from "react-router-dom";
-
+import { NavLink, useNavigate} from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 export default function NavigationBar(){
+    const navigate = useNavigate() 
+    const {signout} = useAuth()
+    const [error, setError] = useState('')
+
+    async function handleLogOut(){
+        try {
+            setError('')
+            await signout()
+            navigate("/login")
+        }
+        catch {
+            setError("failed to sign out")
+        }
+    }
+
     return(
     <div>
         <Navbar className="color-nav" variant="light"
@@ -17,7 +32,7 @@ export default function NavigationBar(){
             <Navbar.Collapse>
             
             <Nav className="nav-items">
-                <NavLink className="navbar-item" to="/logout">Logout</NavLink>
+                <NavLink className="navbar-item" onClick={handleLogOut} to="/login">Logout</NavLink>
             </Nav>
             </Navbar.Collapse>
 

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import {NavbarMod as Navbar} from '../components/NavigationBar';
 import {RequestCard} from '../components/RequestCard';
-
 import "../App.css";
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
 
 export default function AdminLanding() {
 
@@ -27,6 +24,7 @@ export default function AdminLanding() {
       setPendingRequests(requestData);
       setPendingTxns(txnData);
     }
+    
     
     try{
       fetchData();

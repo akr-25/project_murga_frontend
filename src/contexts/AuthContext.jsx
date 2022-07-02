@@ -1,48 +1,77 @@
-import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { BACKEND_URLS } from "../config/urls";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import React,  { useContext, useState, useEffect } from 'react'
+import { Navigate, useLocation } from 'react-router-dom';
+import { auth } from '../firebase';
 
-const AuthContext = createContext(null);
 
-export function useAuth() {
-  return useContext(AuthContext);
+const AuthContext = React.createContext(); 
+
+export function useAuth(){
+    return useContext(AuthContext)
 }
 
-export function AuthProvider({ children }) {
-  const [auth, setAuth] = useState(false);
-  const [user, setUser] = useState({});
+export function AuthProvider( { children } ) {
+    const [currentUser, setcurrentUser] = useState({
+      isAuthorized: false, 
+      email: null
+    })
 
-  useEffect(() => {
-    const asyncFunc = async () => {
-      try {
-        const response = await axios.get(BACKEND_URLS.AUTH.STATUS, {
-          withCredentials: true,
-        });
-        if (response.data.auth === true) {
-          setAuth(true);
-          setUser(response.data);
+    function signin(email, password){
+        return signInWithEmailAndPassword(auth, email, password)
+    }
+    function signout(){
+        return signOut(auth)
+    }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if(user){
+              // console.log("yes")
+              setcurrentUser({
+                isAuthorized: true, 
+                email: user.email
+              })
+              console.log(currentUser)
+            } 
+            else{
+              // console.log("no")
+              setcurrentUser({
+                isAuthorized: false, 
+                email: null
+              })
+              console.log(currentUser)
+            }
+            
+        })
+
+        return () => {
+            unsubscribe()
         }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    asyncFunc();
-  }, []);
+    }, [])
+    
+    
+    if(currentUser){
 
-  const value = {
-    user,
-    auth,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    }
+    const value = {
+        currentUser, 
+        signin, 
+        signout
+    }
+  return (
+    <AuthContext.Provider value = {value}>
+        {children}
+    </AuthContext.Provider>
+  )
 }
+
 
 export function RequireAuth({ children }) {
-  const { auth } = useAuth();
+  const { currentUser } = useAuth();
   const location = useLocation();
-
-  if (!auth) {
+  // console.log("req")
+  // console.log(currentUser)
+  if (!currentUser.isAuthorized) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 

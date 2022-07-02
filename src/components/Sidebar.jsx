@@ -21,12 +21,12 @@ function Sidebar() {
         <Offcanvas.Body>
         
           <ListGroup variant="flush" >
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Home</NavLink></ListGroup.Item>
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='entry_update' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Entry / Update</NavLink></ListGroup.Item>
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='feed_log' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>FeedLog</NavLink></ListGroup.Item>
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='pricing_table' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>PriceLog</NavLink></ListGroup.Item>
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='req_history' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Request History</NavLink></ListGroup.Item>
-            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='create_an_order' className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Create An Order</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='' onClick={handleClose} className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Home</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='entry_update' onClick={handleClose} className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Entry / Update</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='feed_log' onClick={handleClose} className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>FeedLog</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='pricing_table' onClick={handleClose} className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>PriceLog</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='req_history' onClick={handleClose} className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Request History</NavLink></ListGroup.Item>
+            <ListGroup.Item style={{backgroundColor:"#4E73DF"}}><NavLink style={{'color':'white', fontSize: "18px"}} to='create_an_order' onClick={handleClose}  className={isActive =>"nav-link" + (!isActive ? " unselected" : "")}>Create An Order</NavLink></ListGroup.Item>
           </ListGroup>
   
         </Offcanvas.Body>
