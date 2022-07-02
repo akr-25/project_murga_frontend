@@ -271,7 +271,7 @@ function PlaceOrder(props){
                         </Form.Group>
                         
                         <Button type="button" onClick={placeOrder} variant="primary">
-                        Place Order
+                            Place Order
                         </Button>
                     </Form>
                 </Container>

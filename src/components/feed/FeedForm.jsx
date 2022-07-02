@@ -87,9 +87,9 @@ function FeedForm(props){
             }catch(err){
                 console.log(err); 
             }
-            
         }
         fetchActiveBatches();
+        
       },[]);
     
 

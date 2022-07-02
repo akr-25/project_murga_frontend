@@ -241,7 +241,6 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
     console.log(res); 
 
     if(res.message === "success"){
-        //if(newOrderStatus === "Rejected"){
             let updatedPendingRequests = pendingRequests.filter(checkedItem => item !== checkedItem);
             //console.log(updatedPendingRequests);
             setPendingRequests(updatedPendingRequests);

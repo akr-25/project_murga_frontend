@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import {Form, Container, Button} from "react-bootstrap";
-import {NavbarMod as Navbar} from "../../components/Navbar";
 
 function Update(props){
     const [itemType, setItemType] = useState("-");
@@ -57,6 +56,7 @@ function Update(props){
         console.log(e.target.value);
         setBatchSelected(e.target.value);
     }
+    
     function handleBatchList(item, subItem){
         let itemTypeCode = item.substring(0, 1);
         let itemSubTypeCode = subItem.substring(0, 1);
@@ -156,7 +156,6 @@ function Update(props){
     }
 
     function ListABatch(batch){
-        // console.log(batch);
         return (
             <option key={batch} name={batch} value={batch}>{batch}</option>
         );
@@ -165,7 +164,6 @@ function Update(props){
     
     return (
         <div className="pg">
-        <Navbar></Navbar>
             <div className="items-div">
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>

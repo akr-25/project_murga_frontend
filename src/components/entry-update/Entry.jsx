@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {Form, Container, Button} from "react-bootstrap";
-import {NavbarMod as Navbar} from "../../components/Navbar";
 
-function Entry(props){
+function Entry(){
     const [itemType, setItemType] = useState("Chicken");
     const [itemSubType, setItemSubType] = useState("Egg");
 
@@ -12,6 +11,7 @@ function Entry(props){
     function handleItemSubType(e){
         setItemSubType(e.target.value);
     }
+
     async function createNewBatch(){ // here, there is a confusion regarding batch table and price table... Update it later
         let batchData = {
             type: itemType,
@@ -39,7 +39,6 @@ function Entry(props){
     
     return (
         <div className="pg">
-        <Navbar></Navbar>
             <div className="items-div">
                 <div className="row">
                     <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>

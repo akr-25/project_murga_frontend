@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import {NavbarMod as Navbar} from '../components/Navbar';
+import {NavbarMod as Navbar} from '../components/NavigationBar';
 import {RequestCard} from '../components/RequestCard';
 
 import "../App.css";
 import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
-export default function Home() {
+export default function AdminLanding() {
 
   const [pendingRequests, setPendingRequests] = useState([]);
   const [pendingTxns, setPendingTxns] = useState([]);
@@ -37,7 +38,6 @@ export default function Home() {
 
   return (
     <div className="App">
-        <Navbar></Navbar>
         <h1 className="adminLandingHeader">Pending Requests</h1>
         {pendingRequests.length ? <RequestCard requestType="Request" pendingRequests={pendingRequests} pendingTxns={pendingTxns} setPendingRequests={setPendingRequests} setPendingTxns={setPendingTxns}/> : <div style={{alignItems: "center"}}><h3 style={{marginTop: "20px", paddingBottom: "20px", textAlign: "center"}}>No Pending Request found</h3></div>}
         <hr></hr>   
