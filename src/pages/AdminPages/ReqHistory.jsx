@@ -125,7 +125,7 @@ function ReqHistory() {
       <div className="tableDiv">
         <Table striped bordered hover responsive>
           <THead columnNames={columnNames}></THead>
-          <TBody tableData={currentRows}></TBody>
+          <TBody rowFor="RH" tableData={currentRows}></TBody>
         </Table>
 
         <TFoot 

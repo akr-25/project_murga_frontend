@@ -207,43 +207,45 @@ function ReqHistory() {
   return (
     <div>
       <h1 className="pageTitle">Balance Logs</h1>
-      <div className="containerDateSort">
-        <div
-            className="d-flex flex-row justify-content-between w-80 mt-0 mb-0"
-            style={{ width: "80%", margin: "auto" }}>
-            <div style={{ display: "flex", gap: "1rem" }}>
-                <span>
-                    <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item type</Form.Label>
-                    <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
-                        <option name="-">Select Item Type</option>
-                        <option name="C">Chicken</option>
-                        <option name="D">Duck</option>
-                    </Form.Select>
-                </span>
-                <span>
-                    <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
-                    <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
-                        <option name="-">Select Item SubType</option>
-                        <option name="E">Egg</option>
-                        <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
-                        <option name="L">Layer</option>
-                        <option name="G">Grower</option>
-                    </Form.Select>
-                </span>
-                <span>
-                    <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Active Batches</Form.Label>
-                    <Form.Select value={batchSelected} onChange={handleBatchSelected} style={{fontWeight:"600", fontSize:"1em"}}>
-                        {batchesToDisplay.map(ListABatch)}
-                    </Form.Select>
-                </span>
+        <div className="containerDateSort">
+            <div className="sortWrap">
+                <div
+                    className="d-flex flex-row justify-content-between w-80 mt-0 mb-0"
+                    style={{ width: "80%", margin: "auto" }}>
+                    <div style={{ display: "flex", gap: "1rem" }}>
+                        <span>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item type</Form.Label>
+                            <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
+                                <option name="-">Select Item Type</option>
+                                <option name="C">Chicken</option>
+                                <option name="D">Duck</option>
+                            </Form.Select>
+                        </span>
+                        <span>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Sub-type</Form.Label>
+                            <Form.Select value={itemSubType} onChange={(e) => handleItemSubType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
+                                <option name="-">Select Item SubType</option>
+                                <option name="E">Egg</option>
+                                <option name="C">{itemType === "Chicken" ? "Chick" : "Duckling"}</option>
+                                <option name="L">Layer</option>
+                                <option name="G">Grower</option>
+                            </Form.Select>
+                        </span>
+                        <span>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>ActiveBatches</Form.Label>
+                            <Form.Select value={batchSelected} onChange={handleBatchSelected} style={{fontWeight:"600", fontSize:"1em"}}>
+                                {batchesToDisplay.map(ListABatch)}
+                            </Form.Select>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
-      </div>
 
       <div className="tableDiv">
         <Table striped bordered hover responsive>
           <THead columnNames={columnNames}></THead>
-          <TBody tableData={currentRows}></TBody>
+          <TBody rowFor="BL" tableData={currentRows}></TBody>
         </Table>
 
         <TFoot 
