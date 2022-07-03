@@ -1,5 +1,4 @@
 import React from "react";
-import {NavbarMod as Navbar} from "../../components/NavigationBar";
 import FeedForm from "../../components/feed/FeedForm";
 // import "../../App.css";
 

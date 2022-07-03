@@ -6,6 +6,7 @@ function FeedForm(props){
     const [itemSubType, setItemSubType] = useState("-");
     const [foodQty, setFoodQty] = useState(0);
     const [foodPrice, setFoodPrice] = useState(0);
+    const [isLoading, setLoading] = useState(false);
 
     const [allBatches, setAllBatches] = useState([]);
 
@@ -94,7 +95,11 @@ function FeedForm(props){
     
 
 
-    async function enterFeedLog(){ // update corresonding routes when ready
+    async function enterFeedLog(e){ // update corresonding routes when ready
+        //console.log(e);
+        e.preventDefault();
+        setLoading(true);
+
         try{
             let feedData = {
                 unit_id: batchSelected,
@@ -121,6 +126,8 @@ function FeedForm(props){
         catch(err){
             console.log(err);
         }
+
+        setLoading(false);
     }
 
     function ListABatch(batch){
@@ -136,7 +143,7 @@ function FeedForm(props){
             <div className="row">
                 <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
                     <Container className="flex form-heading"><h1>Feed-Log</h1><hr></hr></Container>  
-                    <Form>
+                    <Form onSubmit={enterFeedLog}>
                         <Form.Group className="mb-3" controlId="itemType">
                                 <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
                                 <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -173,8 +180,8 @@ function FeedForm(props){
                             <Form.Control value={foodPrice} onChange={(e) => handleFoodPrice(e)} type="number" placeholder="Rs.0" className="form-control"/>
                         </Form.Group>
 
-                        <Button onClick={enterFeedLog} variant="primary">
-                            Submit FeedLog
+                        <Button disabled={isLoading} type="submit" variant="primary">
+                            {isLoading ? "Loading..." : "Submit Feed Log"}
                         </Button>
                     </Form>
                 </Container>

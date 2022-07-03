@@ -12,11 +12,14 @@ function PlaceOrder(props){
     const [itemSubType, setItemSubType] = useState("-");
     const [itemQty1, setItemQty1] = useState(0);
     const [itemQty2, setItemQty2] = useState(0);
-    const [itemPrice, setItemPrice] = useState();
+    const [itemPrice, setItemPrice] = useState(0);
     const [availableItemQty1, setAvailableItemQty1] = useState(0);
     const [availableItemQty2, setAvailableItemQty2] = useState(0);
     const [itemSellPrice, setItemSellPrice] = useState(100);
     const [allPrices, setAllPrices] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+    const [itemType1Name, setItemType1Name] = useState("");
+    const [itemType2Name, setItemType2Name] = useState("");
 
     const [allBatches, setAllBatches] = useState([]);
 
@@ -48,6 +51,20 @@ function PlaceOrder(props){
         setBatchSelected(e.target.value);
         fetchPrice(e.target.value);
         fetchBalanceLog(e.target.value);
+        fetchTypeNames(e.target.value);
+    }
+    function fetchTypeNames(batch_id){
+        console.log(batch_id);
+        if(batch_id[1] === 'E'){
+            setItemType1Name("Table");
+            setItemType2Name("Hatching");
+        }else if(batch_id[1] === 'C' || batch_id[1] === 'D'){
+            batch_id[1] === 'C' ? setItemType1Name("Chick") : setItemType1Name("Duckling");
+            setItemType2Name(null);
+        }else if(batch_id[1] === 'L' || batch_id[1] === 'G'){
+            setItemType1Name("Male");
+            setItemType2Name("Female");
+        }
     }
     function handleBatchList(item, subItem){
         let itemTypeCode = item.substring(0, 1);
@@ -60,7 +77,9 @@ function PlaceOrder(props){
         const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
         setBatchesToDisplay(extractedBatches);
+        console.log(extractedBatches[0]);
         extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
+        extractedBatches.length > 0 ? fetchTypeNames(extractedBatches[0]) : fetchTypeNames("");
     }
 
     async function fetchPrice(selectedBatchCode){
@@ -152,7 +171,10 @@ function PlaceOrder(props){
     
 
 
-    async function placeOrder(){
+    async function placeOrder(e){
+        e.preventDefault();
+        setLoading(true);
+
         const typeOfUnit = itemType.substring(0,1) + itemSubType.substring(0, 1);
     
         const orderData = {
@@ -185,14 +207,17 @@ function PlaceOrder(props){
         if(res.message === "success"){
             alert("Order Placed Successfully");
             setOrderType("SELL");
-            setItemType("Chick");
-            setItemSubType("Egg");
+            setItemType("");
+            setItemSubType("");
             setItemQty1(0);
             setItemQty2(0);
             setItemPrice(0);
+            setBatchesToDisplay([]);
         }else{
             console.log(res);
         }
+
+        setLoading(false);
     }
 
     function ListABatch(batch){
@@ -207,7 +232,7 @@ function PlaceOrder(props){
             <div className="row">
                 <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
                     <Container className="flex form-heading"><h1>Place a New Order</h1><hr></hr></Container>  
-                    <Form>
+                    <Form onSubmit={placeOrder}>
                         <Form.Group className="mb-3" controlId="itemType">
                             <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Order Type</Form.Label>
                             <Form.Select value={orderType} onChange={(e) => handleOrderType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -244,22 +269,29 @@ function PlaceOrder(props){
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of Type-1:</u> {availableItemQty1}</strong></Form.Label>
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of {itemType1Name}:</u> {availableItemQty1}</strong></Form.Label>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 1</Form.Label>
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity {itemType1Name}</Form.Label>
                         <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty1} onChange={(e) => handleItemQty1(e)}/>
                         </Form.Group>
 
+                        {itemType2Name !== null ? 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of Type-2:</u> {availableItemQty2}</strong></Form.Label>
-                        </Form.Group>
+                        <Form.Label style={{fontWeight:"500", fontSize:"1.3em"}}><strong><u>Available Quantity of {itemType2Name}:</u> {availableItemQty2}</strong></Form.Label>
+                        </Form.Group> 
+                        : 
+                        null}
 
+                        {itemType2Name !== null ? 
                         <Form.Group className="mb-3" controlId="quantity">
-                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity Type - 2</Form.Label>
+                        <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Quantity {itemType2Name}</Form.Label>
                         <Form.Control type="number" min={1} max={2} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemQty2} onChange={(e) => handleItemQty2(e)}/>
                         </Form.Group>
+                        : 
+                        null}
+                        
 
                         <Form.Group className="mb-3" controlId="quantity">
                         <Form.Label style={{fontWeight:"500", fontSize:"1.3em", textDecoration: "underline"}}><strong>Current Price per Unit: {`Rs. ${itemPrice}`} </strong></Form.Label>
@@ -270,8 +302,8 @@ function PlaceOrder(props){
                         <Form.Control type="number" min={0} placeholder="" style={{ fontWeight:"600", fontSize:"1em"}} value={itemSellPrice} onChange={(e) => handleItemSellPrice(e)}/>
                         </Form.Group>
                         
-                        <Button type="button" onClick={placeOrder} variant="primary">
-                            Place Order
+                        <Button disabled={isLoading} type="submit" variant="primary">
+                            {isLoading ? "Loading..." : "Place Order"}
                         </Button>
                     </Form>
                 </Container>

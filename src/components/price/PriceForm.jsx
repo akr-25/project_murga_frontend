@@ -5,6 +5,7 @@ function PriceForm(props){
     const [itemType, setItemType] = useState("-");
     const [itemSubType, setItemSubType] = useState("-");
     const [newPrice, setNewPrice] = useState("");
+    const [isLoading, setLoading] = useState(false);
 
     const [allBatches, setAllBatches] = useState([]);
 
@@ -90,7 +91,10 @@ function PriceForm(props){
     
     
 
-    async function enterPriceLog(){ // update corresonding routes when ready
+    async function enterPriceLog(e){ // update corresonding routes when ready
+        e.preventDefault();
+        setLoading(true);
+
         try{
             let priceData = {
                 "unit_id": batchSelected,
@@ -118,7 +122,7 @@ function PriceForm(props){
         catch(err){
             console.log(err);
         }
-            
+        setLoading(false);
     }
 
     function ListABatch(batch){
@@ -134,7 +138,7 @@ function PriceForm(props){
             <div className="row">
                 <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center" style={{borderRadius:"10px", marginTop:"100px",marginBottom:"0px", padding:"40px", backgroundColor:"#F8F9FC"}}>
                     <Container className="flex form-heading"><h1>Price-Log</h1><hr></hr></Container>  
-                    <Form>
+                    <Form onSubmit={enterPriceLog}>
                         <Form.Group className="mb-3" controlId="itemType">
                             <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>Item Type</Form.Label>
                             <Form.Select value={itemType} onChange={(e) => handleItemType(e)} style={{fontWeight:"600", fontSize:"1em"}}>
@@ -167,8 +171,8 @@ function PriceForm(props){
                             <Form.Control value={newPrice} onChange={(e) => handleNewPrice(e)} type="text" placeholder="Rs.0" className="form-control"/>
                         </Form.Group>
 
-                        <Button onClick={enterPriceLog} variant="primary">
-                            Submit PriceLog
+                        <Button disabled={isLoading} type="submit" variant="primary">
+                            {isLoading ? "Loading..." : "Submit PriceLog"}
                         </Button>
                     </Form>
                 </Container>
