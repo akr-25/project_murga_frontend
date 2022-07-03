@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import {NavbarMod as Navbar} from '../components/NavigationBar';
 import {RequestCard} from '../components/RequestCard';
 
 import "../App.css";
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
 
 export default function AdminLanding() {
 
@@ -18,7 +16,7 @@ export default function AdminLanding() {
         method: "GET", }); 
 
       res = await res.json();
-      console.log(res); 
+      console.log(res);
 
       const requestData = res.data.requests.filter(item => item.order_status==="Pending For Approval");
       const txnData = res.data.requests.filter(item => item.order_status==="Pending For Completion");

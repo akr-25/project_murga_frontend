@@ -11,7 +11,7 @@ function THead(){
               <th>Order Date</th>
               <th>Status Updated On</th>
               <th>Order Status</th>
-              <th>Order Details</th>
+              <th>Invoice</th>
             </tr>
         </thead>
     )
