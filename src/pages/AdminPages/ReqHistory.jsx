@@ -23,6 +23,18 @@ let reqHistoryData = [
 
 let allData;
 
+const columnNames = [
+  "S. No.",
+  "Order No.",
+  "Customer Name",
+  "Order Amount",
+  "Order Date.",
+  "Status Updated On",
+  "Order Status",
+  "Downlaod Invoice"
+];
+
+
 
 function ReqHistory() {
   const [tableData, setTableData] = useState(reqHistoryData);
@@ -48,7 +60,8 @@ function ReqHistory() {
     amt: "Rs. " + row.selling_price_per_unit,
     orderDate: orderDate +"-"+ orderMonth +"-"+ orderYear,
     statusUpdateDate: statusDate +"-"+ statusMonth +"-"+ statusYear,
-    orderStatus: row.order_status};
+    orderStatus: row.order_status
+  };
   }
 
   useEffect(() => {
@@ -111,7 +124,7 @@ function ReqHistory() {
 
       <div className="tableDiv">
         <Table striped bordered hover responsive>
-          <THead></THead>
+          <THead columnNames={columnNames}></THead>
           <TBody tableData={currentRows}></TBody>
         </Table>
 

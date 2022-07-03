@@ -12,7 +12,7 @@ function UserDetails(props) {
     return (
       <div className="pg" >
         <div className="items-div">
-          <div className="row">
+          <div className="row"></div>
             <Container className="col-12 col-lg-4 col-md-6 col-sm-6 div-wrapper justify-content-center align-items-center form-container" >
               <Container className="flex form-heading"><h1>Select One to Proceed</h1><hr></hr></Container>  
               <div className="flex-parent jc-center">
@@ -22,7 +22,6 @@ function UserDetails(props) {
             </Container>
           </div>
         </div>
-      </div>
     );
   }else if(method === 1){
     return (

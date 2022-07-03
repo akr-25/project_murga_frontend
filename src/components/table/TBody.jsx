@@ -6,7 +6,7 @@ import Row from './Row';
 
 function CreateRow(entry){
     return(
-        <Row key={entry.sNo} sNo={entry.sNo} orderNo={entry.orderNo} custName={entry.custName}  amt={entry.amt} orderDate={entry.orderDate} statusUpdateDate={entry.statusUpdateDate} orderStatus= {entry.orderStatus}></Row>
+        <Row key={entry.sNo} entry={entry}></Row>
     )
 }
 

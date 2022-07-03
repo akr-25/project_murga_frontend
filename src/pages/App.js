@@ -10,7 +10,7 @@ import PricingTable from './AdminPages/PricingTable';
 import ReqHistory from './AdminPages/ReqHistory';
 import OrderDetails from './AdminPages/OrderDetails';
 import CreateOrder from './AdminPages/CreateOrder';
-import Fallback from '../components/Fallback';
+import AllLogs from './AdminPages/AllLogs';
 import Home from './Home';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -35,6 +35,7 @@ export default function App() {
               <Route path='pricing_table' element={<PricingTable/>} />
               <Route path='req_history' element={<ReqHistory/>} />
               <Route path='create_an_order' element={<CreateOrder/>} />
+              <Route path='view_logs' element={<AllLogs/>} />
               <Route path='orderDetails/:id' element={<OrderDetails/>}/> 
             </Route>
           </Routes>
