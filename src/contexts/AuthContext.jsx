@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {  onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import React,  { useContext, useState, useEffect } from 'react'
 import { Navigate, useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
@@ -11,10 +11,17 @@ export function useAuth(){
 }
 
 export function AuthProvider( { children } ) {
-    const [currentUser, setcurrentUser] = useState({
-      isAuthorized: false, 
-      email: null
-    })
+    let sessionStorageValue = JSON.parse(sessionStorage.getItem("currentUser"));
+    
+    console.log(sessionStorageValue)
+    if(sessionStorageValue == null){
+      sessionStorageValue = {
+        isAuthorized: false,
+        email: null
+      }; 
+    }
+
+    const [currentUser, setcurrentUser] = useState(sessionStorageValue)
 
     function signin(email, password){
         return signInWithEmailAndPassword(auth, email, password)
@@ -25,23 +32,31 @@ export function AuthProvider( { children } ) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if(user){
-              // console.log("yes")
-              setcurrentUser({
-                isAuthorized: true, 
-                email: user.email
-              })
-              console.log(currentUser)
-            } 
-            else{
-              // console.log("no")
-              setcurrentUser({
-                isAuthorized: false, 
-                email: null
-              })
-              console.log(currentUser)
-            }
-            
+          if(user){
+            console.log("user has logged in");
+
+            setcurrentUser({
+              isAuthorized: true,
+              email: user.email
+            });
+            sessionStorage.setItem("currentUser", JSON.stringify({
+              isAuthorized: true,
+              email: user.email
+            }));
+          }
+          else{
+            console.log("user is logged in");
+
+            setcurrentUser({
+              isAuthorized: false,
+              email: null
+            });
+
+            sessionStorage.setItem("currentUser", JSON.stringify({
+              isAuthorized: false,
+              email: null
+            }));
+          }
         })
 
         return () => {
@@ -50,9 +65,6 @@ export function AuthProvider( { children } ) {
     }, [])
     
     
-    if(currentUser){
-
-    }
     const value = {
         currentUser, 
         signin, 
@@ -70,8 +82,10 @@ export function RequireAuth({ children }) {
   const { currentUser } = useAuth();
   const location = useLocation();
   // console.log("req")
-  // console.log(currentUser)
-  if (!currentUser.isAuthorized) {
+  const { isAuthorized } = currentUser; 
+
+  console.log("reqauth", isAuthorized)
+  if (!isAuthorized) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 

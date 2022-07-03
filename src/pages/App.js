@@ -26,19 +26,17 @@ export default function App() {
           <Routes>
             <Route path='/' element={<Dashboard/>}/>
             <Route path='/login' element={<LogIn/>}/>
-          </Routes>
-          <Routes>
-              //! auth ho jane par iss route ko uncomment krke check kr lena 
-              {/* <Route path='/home' element={<RequireAuth><Home/></RequireAuth>}> */} 
-              <Route path='/home' element={<RequireAuth> <Home/></RequireAuth>}>
-                <Route path='' element={<AdminLanding/>} /> 
-                <Route path='entry_update' element={<EntryUpdate/>} />
-                <Route path='feed_log' element={<FeedLog/>} />
-                <Route path='pricing_table' element={<PricingTable/>} />
-                <Route path='req_history' element={<ReqHistory/>} />
-                <Route path='create_an_order' element={<CreateOrder/>} />
-                <Route path='orderDetails/:id' element={<OrderDetails/>}/> 
-              </Route>
+            //! auth ho jane par iss route ko uncomment krke check kr lena 
+            {/* <Route path='/home' element={<RequireAuth><Home/></RequireAuth>}> */} 
+            <Route path='/home' element={<RequireAuth> <Home/></RequireAuth>}>
+              <Route path='' element={<AdminLanding/>} /> 
+              <Route path='entry_update' element={<EntryUpdate/>} />
+              <Route path='feed_log' element={<FeedLog/>} />
+              <Route path='pricing_table' element={<PricingTable/>} />
+              <Route path='req_history' element={<ReqHistory/>} />
+              <Route path='create_an_order' element={<CreateOrder/>} />
+              <Route path='orderDetails/:id' element={<OrderDetails/>}/> 
+            </Route>
           </Routes>
       </AuthProvider>
     </ErrorBoundary>
