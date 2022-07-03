@@ -31,10 +31,14 @@ function ReqHistory() {
   const [itemType1Name, setItemType1Name] = useState("");
   const [itemType2Name, setItemType2Name] = useState("");
 
+  const [activeBatches, setActiveBatches] = useState([]);
+  const [inactiveBatches, setInactiveBatches] = useState([]);
   const [allBatches, setAllBatches] = useState([]);
 
   const [batchesToDisplay, setBatchesToDisplay] = useState([]);
   const [batchSelected, setBatchSelected] = useState("");
+
+  const [active, setActive] = useState(false);
 
   const columnNames = [
     "S. No.",
@@ -63,13 +67,19 @@ function ReqHistory() {
 
 
   function handleItemType(e){
-      setItemType(e.target.value);
-      handleBatchList(e.target.value, itemSubType);
-  }
-  function handleItemSubType(e){
-      setItemSubType(e.target.value);
-      handleBatchList(itemType, e.target.value);
-  }
+    setItemType(e.target.value);
+    handleBatchList(e.target.value, itemSubType, active);
+}
+function handleItemSubType(e){
+    setItemSubType(e.target.value);
+    handleBatchList(itemType, e.target.value, active);
+}
+function handleActive(e){
+    setActive(!active);
+    console.log(active);
+    active ? setAllBatches(activeBatches) : setAllBatches(inactiveBatches);
+    handleBatchList(itemType, itemSubType, !active);
+}
 
   function handleBatchSelected(e){
       console.log(e.target.value);
@@ -90,50 +100,66 @@ function ReqHistory() {
           setItemType2Name("Female");
       }
   }
-  function handleBatchList(item, subItem){
-      let itemTypeCode = item.substring(0, 1);
-      let itemSubTypeCode = subItem.substring(0, 1);
-      const itemCode = itemTypeCode + itemSubTypeCode;
+  function handleBatchList(item, subItem, isActive){
+    let itemTypeCode = item.substring(0, 1);
+    let itemSubTypeCode = subItem.substring(0, 1);
+    const itemCode = itemTypeCode + itemSubTypeCode;
 
-      console.log(allBatches);
+    console.log(allBatches);
 
-      const extractedBatchesObject = allBatches.filter(batch => batch.batch_id.substring(0, 2) === itemCode);
-      const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
+    let batchesArray;
 
-      setBatchesToDisplay(extractedBatches);
-      console.log(extractedBatches[0]);
-      extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
-      extractedBatches.length > 0 ? fetchTypeNames(extractedBatches[0]) : fetchTypeNames("");
-      extractedBatches.length > 0 ? fetchLogs(extractedBatches[0]) : fetchTypeNames("");
+    batchesArray = isActive ? activeBatches : inactiveBatches;
+
+    const extractedBatchesObject = batchesArray.filter(batch => batch.batch_id.substring(0, 2) === itemCode);
+    const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
+
+    setBatchesToDisplay(extractedBatches);
+    console.log(extractedBatches[0]);
+    extractedBatches.length > 0 ? setBatchSelected(extractedBatches[0]) : setBatchSelected("");
+    extractedBatches.length > 0 ? fetchTypeNames(extractedBatches[0]) : fetchTypeNames("");
+    extractedBatches.length > 0 ? fetchLogs(extractedBatches[0]) : fetchTypeNames("");
+}
+
+
+useEffect(() => {
+  async function fetchBatches(){ 
+
+      let res = await fetch("http://localhost:3001/api/batch/fetch", {
+          method: "GET",
+      }); 
+
+      res = await res.json();
+
+      console.log("YES");
+      console.log(res); 
+
+      const activeBatchArray = res.data.batch.filter(item => item.is_active === 'Y');
+      const inactiveBatchArray = res.data.batch.filter(item => item.is_active === 'N');
+      setActiveBatches(activeBatchArray);
+      setInactiveBatches(inactiveBatchArray);
+      console.log(activeBatchArray);
+      console.log(inactiveBatchArray);
+      
+
+      if(res.message === "success"){
+          if(active){
+              setAllBatches(activeBatchArray);
+          }else{
+              setAllBatches(inactiveBatchArray);
+          }
+          //handleBatchList("Chicken", "Egg");
+      }else{
+          console.log(res);
+      }
   }
-
-
-  useEffect(() => {
-    async function fetchActiveBatches(){ 
-
-        let res = await fetch("http://localhost:3001/api/batch/fetch", {
-            method: "GET",
-        }); 
-
-        res = await res.json();
-
-        console.log("YES");
-        console.log(res); 
-
-        if(res.message === "success"){
-            setAllBatches(res.data.batch);
-            handleBatchList("Chicken", "Egg");
-        }else{
-            console.log(res);
-        }
-    }
-    try{
-        fetchActiveBatches();
-    }
-    catch(err){
-      console.log(err); 
-    }
-    }, []);
+  try{
+      fetchBatches();
+  }
+  catch(err){
+    console.log(err); 
+  }
+  }, []);
 
     async function fetchLogs(batch_id){
         try{
@@ -226,10 +252,19 @@ function ReqHistory() {
                             </Form.Select>
                         </span>
                         <span>
-                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>ActiveBatches</Form.Label>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>{active ? "ActiveBatches" : "InactiveBatches"}</Form.Label>
                             <Form.Select value={batchSelected} onChange={handleBatchSelected} style={{fontWeight:"600", fontSize:"1em"}}>
                                 {batchesToDisplay.map(ListABatch)}
                             </Form.Select>
+                        </span>
+                        <span style={{marginLeft:"15px"}}>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>{active ? "Active" : "Inactive"}</Form.Label>
+                            <Form.Check 
+                                type="switch"
+                                id="custom-switch"
+                                checked={active}
+                                onClick={handleActive}
+                            />
                         </span>
                     </div>
                 </div>

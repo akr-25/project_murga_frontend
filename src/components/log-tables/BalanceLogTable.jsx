@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import "../../App.css";
 import "../../styles/app.css";
-import {Table, Form, Button, Container} from 'react-bootstrap';
-import DateRangeComp from "../../components/table/DateRangeSelector";
+import {Table, Form} from 'react-bootstrap';
 import THead from "../../components/table/THead";
 import TBody from "../../components/table/TBody";
 import TFoot from "../../components/table/TFoot";
-import SortTable from "../../components/table/SortTable";
 import { useEffect } from "react";
 
 let reqHistoryData = [
@@ -33,10 +31,14 @@ function ReqHistory() {
   const [itemType1Name, setItemType1Name] = useState("");
   const [itemType2Name, setItemType2Name] = useState("");
 
+  const [activeBatches, setActiveBatches] = useState([]);
+  const [inactiveBatches, setInactiveBatches] = useState([]);
   const [allBatches, setAllBatches] = useState([]);
 
   const [batchesToDisplay, setBatchesToDisplay] = useState([]);
   const [batchSelected, setBatchSelected] = useState("");
+
+  const [active, setActive] = useState(false);
 
   const columnNames = [
     "S. No.",
@@ -68,14 +70,20 @@ function ReqHistory() {
   }
 
 
-  function handleItemType(e){
-      setItemType(e.target.value);
-      handleBatchList(e.target.value, itemSubType);
-  }
-  function handleItemSubType(e){
-      setItemSubType(e.target.value);
-      handleBatchList(itemType, e.target.value);
-  }
+    function handleItemType(e){
+        setItemType(e.target.value);
+        handleBatchList(e.target.value, itemSubType, active);
+    }
+    function handleItemSubType(e){
+        setItemSubType(e.target.value);
+        handleBatchList(itemType, e.target.value, active);
+    }
+    function handleActive(e){
+        setActive(!active);
+        console.log(active);
+        active ? setAllBatches(activeBatches) : setAllBatches(inactiveBatches);
+        handleBatchList(itemType, itemSubType, !active);
+    }
 
   function handleBatchSelected(e){
       console.log(e.target.value);
@@ -96,14 +104,18 @@ function ReqHistory() {
           setItemType2Name("Female");
       }
   }
-  function handleBatchList(item, subItem){
+  function handleBatchList(item, subItem, isActive){
       let itemTypeCode = item.substring(0, 1);
       let itemSubTypeCode = subItem.substring(0, 1);
       const itemCode = itemTypeCode + itemSubTypeCode;
 
       console.log(allBatches);
 
-      const extractedBatchesObject = allBatches.filter(batch => batch.batch_id.substring(0, 2) === itemCode);
+      let batchesArray;
+
+      batchesArray = isActive ? activeBatches : inactiveBatches;
+
+      const extractedBatchesObject = batchesArray.filter(batch => batch.batch_id.substring(0, 2) === itemCode);
       const extractedBatches = extractedBatchesObject.map(item => item.batch_id);
 
       setBatchesToDisplay(extractedBatches);
@@ -115,7 +127,7 @@ function ReqHistory() {
 
 
   useEffect(() => {
-    async function fetchActiveBatches(){ 
+    async function fetchBatches(){ 
 
         let res = await fetch("http://localhost:3001/api/batch/fetch", {
             method: "GET",
@@ -126,15 +138,27 @@ function ReqHistory() {
         console.log("YES");
         console.log(res); 
 
+        const activeBatchArray = res.data.batch.filter(item => item.is_active === 'Y');
+        const inactiveBatchArray = res.data.batch.filter(item => item.is_active === 'N');
+        setActiveBatches(activeBatchArray);
+        setInactiveBatches(inactiveBatchArray);
+        console.log(activeBatchArray);
+        console.log(inactiveBatchArray);
+        
+
         if(res.message === "success"){
-            setAllBatches(res.data.batch);
-            handleBatchList("Chicken", "Egg");
+            if(active){
+                setAllBatches(activeBatchArray);
+            }else{
+                setAllBatches(inactiveBatchArray);
+            }
+            //handleBatchList("Chicken", "Egg");
         }else{
             console.log(res);
         }
     }
     try{
-        fetchActiveBatches();
+        fetchBatches();
     }
     catch(err){
       console.log(err); 
@@ -167,30 +191,6 @@ function ReqHistory() {
           console.log(err); 
         }
     }
-
-  // Function to filter data as per sort option clicked. 
-  // It is passed as a callback function in filter of reqHistoryData Array.
-
-  function filterData(sortOption){
-    return function(element){
-      return element.orderStatus === sortOption;
-    }
-  }
-
-  // Function to set/update Value of "tableData" variable as per sort option selected.
-  function updateDataOnSort(sortOption){
-    if(sortOption === "All"){
-      allData.length === 0 ? setTableData(reqHistoryData) : setTableData(allData);
-    }else{
-      const newTableData = allData.filter(filterData(sortOption));
-      setCurrentPage(1);
-      if(newTableData.length){
-        setTableData(newTableData);
-      }else{
-        setTableData(reqHistoryData);
-      }
-    }
-  }
 
   // function to manage currentPageNumber and currentPageData
   function handlePaginationClick(pageNumClicked){
@@ -236,6 +236,15 @@ function ReqHistory() {
                             <Form.Select value={batchSelected} onChange={handleBatchSelected} style={{fontWeight:"600", fontSize:"1em"}}>
                                 {batchesToDisplay.map(ListABatch)}
                             </Form.Select>
+                        </span>
+                        <span style={{marginLeft:"15px"}}>
+                            <Form.Label style={{fontWeight:"600", fontSize:"1em"}}>{active ? "Active" : "Inactive"}</Form.Label>
+                            <Form.Check 
+                                type="switch"
+                                id="custom-switch"
+                                checked={active}
+                                onClick={handleActive}
+                            />
                         </span>
                     </div>
                 </div>
