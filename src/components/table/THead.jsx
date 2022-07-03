@@ -1,20 +1,21 @@
 import React from 'react';
 
-function THead(){
+
+
+function THead(props){
+    function TH(columnName){
+        return(
+            <th>{columnName}</th>
+        )
+    }
     return(
         <thead style={{backgroundColor:"#e4e0fa"}}>
             <tr>
-              <th>S. No.</th>
-              <th>Order No.</th>
-              <th>Customer Name</th>
-              <th>Order Amount</th>
-              <th>Order Date</th>
-              <th>Status Updated On</th>
-              <th>Order Status</th>
-              <th>Order Details</th>
+              {props.columnNames.map(TH)}
             </tr>
         </thead>
     )
 }
+
 
 export default THead;

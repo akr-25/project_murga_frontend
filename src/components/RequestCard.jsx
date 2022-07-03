@@ -252,12 +252,13 @@ async function handleReject(item, pendingRequests, pendingTxns, setPendingReques
     }
 }
 
-function aRequest(item, requestType, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns){
+function aRequest(item, index, requestType, pendingRequests, pendingTxns, setPendingRequests, setPendingTxns){
+  console.log(index);
     return (
         <Col key={item.request_id}>
             <Card>
                 <Card.Body>
-                    <Card.Title style={{textAlign: "center"}}><strong>{"Request #" +item.request_id}</strong></Card.Title>
+                    <Card.Title style={{textAlign: "center"}}><strong>{"Request #" +(parseInt(index) + 1)}</strong></Card.Title>
                     <hr></hr>
                     {/* <Card.Subtitle className="mb-2 text-muted">{item.itemType} - {item.quantity}</Card.Subtitle> */}
                     <Card.Text style={{fontWeight:"400", fontSize:"1.2em"}}>
@@ -283,7 +284,7 @@ function RequestCard(props){
     return(
         <div className="cardBox">
             <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-                {props.requestType === "Request" ? props.pendingRequests.map((item) => aRequest(item, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns)) : props.pendingTxns.map((item) => aRequest(item, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns))}
+                {props.requestType === "Request" ? props.pendingRequests.map((item, index) => aRequest(item, index, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns)) : props.pendingTxns.map((item, index) => aRequest(item, index, props.requestType, props.pendingRequests, props.pendingTxns, props.setPendingRequests, props.setPendingTxns))}
             </Row>
         </div>   
     )
