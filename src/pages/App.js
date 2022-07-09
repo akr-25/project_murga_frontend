@@ -3,6 +3,7 @@ import Dashboard from './Dashboard';
 import LogIn from './LogIn'
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider, RequireAuth} from '../contexts/AuthContext';
+import Fallback from '../components/Fallback'
 import AdminLanding from './AdminLanding';
 import EntryUpdate from './AdminPages/EntryUpdate';
 import FeedLog from './AdminPages/FeedLog';
